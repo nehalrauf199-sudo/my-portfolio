@@ -14,17 +14,16 @@ export default function Home() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        const form = e.target
-        const name = form.name.value
-        const email = form.email.value
-        const message = form.message.value
+        const name = e.target.name.value
+        const email = e.target.email.value
+        const message = e.target.message.value
 
         if (!name || !email || !message) {
             setFormStatus('❌ Please fill all fields')
             return
         }
 
-        // Create mailto link
+        // Create email link
         const subject = `Portfolio Contact from ${name}`
         const body = `Name: ${name}%0A%0AEmail: ${email}%0A%0AMessage:%0A${message}`
         window.location.href = `mailto:nehalrauf199@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`
@@ -101,6 +100,9 @@ export default function Home() {
           }
           .project-clickable {
             min-height: 200px !important;
+          }
+          .whatsapp-btn {
+            width: 100% !important;
           }
         }
       `}</style>
@@ -400,7 +402,6 @@ export default function Home() {
                                 </div>
                             </div>
 
-                            {/* CLICKABLE PROJECT IMAGE - NOW OPENS WEBSITE */}
                             <a
                                 href="https://www.ists-institute.com"
                                 target="_blank"
@@ -472,148 +473,171 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* Contact Section with WORKING FORM */}
+            {/* Contact Section with WHATSAPP & EMAIL */}
             <section id="contact" style={{
                 padding: '60px 20px',
                 backgroundColor: '#667eea'
             }}>
                 <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
                     <h2 style={{ fontSize: '32px', color: 'white', marginBottom: '10px' }}>Get In Touch</h2>
-                    <p style={{ fontSize: '16px', color: '#f0f0f0', marginBottom: '30px' }}>
-                        Ready to work together? Let's discuss your project!
-                    </p>
+                    <p style={{
+                        fontSize: '16px, color: '#f0f0f0', marginBottom: '30px' }}>
+            Choose your preferred way to contact me!
+          </p>
 
-                    <form onSubmit={handleSubmit} className="contact-form" style={{
-                        backgroundColor: 'white',
-                        borderRadius: '16px',
-                        padding: '30px',
-                        textAlign: 'left'
-                    }}>
-                        <div style={{ marginBottom: '15px' }}>
-                            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Your Name *</label>
-                            <input
-                                type="text"
-                                name="name"
-                                placeholder="John Doe"
-                                required
-                                style={{
-                                    width: '100%',
-                                    padding: '12px',
-                                    border: '1px solid #ddd',
-                                    borderRadius: '8px',
-                                    fontSize: '14px'
-                                }}
-                            />
-                        </div>
-                        <div style={{ marginBottom: '15px' }}>
-                            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Email Address *</label>
-                            <input
-                                type="email"
-                                name="email"
-                                placeholder="you@example.com"
-                                required
-                                style={{
-                                    width: '100%',
-                                    padding: '12px',
-                                    border: '1px solid #ddd',
-                                    borderRadius: '8px',
-                                    fontSize: '14px'
-                                }}
-                            />
-                        </div>
-                        <div style={{ marginBottom: '20px' }}>
-                            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Your Message *</label>
-                            <textarea
-                                name="message"
-                                rows="3"
-                                placeholder="Tell me about your project..."
-                                required
-                                style={{
-                                    width: '100%',
-                                    padding: '12px',
-                                    border: '1px solid #ddd',
-                                    borderRadius: '8px',
-                                    fontSize: '14px'
-                                }}
-                            ></textarea>
-                        </div>
+                {/* WHATSAPP BUTTON - DIRECT MESSAGE */}
+                <a
+                    href="https://wa.me/923288716168?text=Hi%20Nehal,%20I%20saw%20your%20portfolio%20and%20I'm%20interested%20in%20working%20with%20you!"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="whatsapp-btn"
+                    style={{
+                        backgroundColor: '#25D366',
+                        color: 'white',
+                        padding: '16px 30px',
+                        fontSize: '20px',
+                        fontWeight: 'bold',
+                        borderRadius: '50px',
+                        textDecoration: 'none',
+                        display: 'inline-block',
+                        marginBottom: '25px',
+                        width: '100%',
+                        maxWidth: '400px',
+                        transition: 'transform 0.3s',
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+                    }}
+                    onMouseEnter={e => e.target.style.transform = 'scale(1.05)'}
+                    onMouseLeave={e => e.target.style.transform = 'scale(1)'}
+                >
+                    💬 Message me on WhatsApp
+                </a>
 
-                        {formStatus && (
-                            <p style={{
-                                marginBottom: '15px',
-                                padding: '10px',
-                                backgroundColor: formStatus.includes('✅') ? '#d4edda' : '#f8d7da',
-                                color: formStatus.includes('✅') ? '#155724' : '#721c24',
-                                borderRadius: '8px',
-                                fontSize: '14px',
-                                textAlign: 'center'
-                            }}>
-                                {formStatus}
-                            </p>
-                        )}
+                <p style={{ color: 'white', marginBottom: '20px', fontSize: '14px' }}>
+                    OR fill out the form below
+                </p>
 
-                        <button
-                            type="submit"
+                <form onSubmit={handleSubmit} className="contact-form" style={{
+                    backgroundColor: 'white',
+                    borderRadius: '16px',
+                    padding: '30px',
+                    textAlign: 'left'
+                }}>
+                    <div style={{ marginBottom: '15px' }}>
+                        <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Your Name *</label>
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="John Doe"
+                            required
                             style={{
-                                backgroundColor: '#667eea',
-                                color: 'white',
                                 width: '100%',
                                 padding: '12px',
-                                border: 'none',
+                                border: '1px solid #ddd',
                                 borderRadius: '8px',
-                                fontSize: '16px',
-                                fontWeight: 'bold',
-                                cursor: 'pointer',
-                                transition: 'background 0.3s'
+                                fontSize: '14px'
                             }}
-                            onMouseEnter={e => e.target.style.background = '#764ba2'}
-                            onMouseLeave={e => e.target.style.background = '#667eea'}
-                        >
-                            ✉️ Send Message
-                        </button>
+                        />
+                    </div>
+                    <div style={{ marginBottom: '15px' }}>
+                        <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Email Address *</label>
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="you@example.com"
+                            required
+                            style={{
+                                width: '100%',
+                                padding: '12px',
+                                border: '1px solid #ddd',
+                                borderRadius: '8px',
+                                fontSize: '14px'
+                            }}
+                        />
+                    </div>
+                    <div style={{ marginBottom: '20px' }}>
+                        <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Your Message *</label>
+                        <textarea
+                            name="message"
+                            rows="3"
+                            placeholder="Tell me about your project..."
+                            required
+                            style={{
+                                width: '100%',
+                                padding: '12px',
+                                border: '1px solid #ddd',
+                                borderRadius: '8px',
+                                fontSize: '14px'
+                            }}
+                        ></textarea>
+                    </div>
 
+                    {formStatus && (
                         <p style={{
-                            fontSize: '12px',
-                            color: '#666',
-                            textAlign: 'center',
-                            marginTop: '15px'
+                            marginBottom: '15px',
+                            padding: '10px',
+                            backgroundColor: formStatus.includes('✅') ? '#d4edda' : '#f8d7da',
+                            color: formStatus.includes('✅') ? '#155724' : '#721c24',
+                            borderRadius: '8px',
+                            fontSize: '14px',
+                            textAlign: 'center'
                         }}>
-                            This will open your email app. I'll respond within 24 hours!
+                            {formStatus}
                         </p>
-                    </form>
+                    )}
 
-                    <div style={{
-                        marginTop: '30px',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        gap: '20px',
-                        flexWrap: 'wrap'
-                    }}>
-                        <div>
-                            <p style={{ color: 'white', fontSize: '12px' }}>📞 Call/WhatsApp</p>
-                            <a href="tel:03288716168" style={{ color: '#ffd700', fontSize: '18px', fontWeight: 'bold', textDecoration: 'none' }}>0328-8716168</a>
-                        </div>
-                        <div>
-                            <p style={{ color: 'white', fontSize: '12px' }}>📧 Email</p>
-                            <a href="mailto:nehalrauf199@gmail.com" style={{ color: '#ffd700', fontSize: '18px', fontWeight: 'bold', textDecoration: 'none' }}>nehalrauf199@gmail.com</a>
-                        </div>
+                    <button
+                        type="submit"
+                        style={{
+                            backgroundColor: '#667eea',
+                            color: 'white',
+                            width: '100%',
+                            padding: '12px',
+                            border: 'none',
+                            borderRadius: '8px',
+                            fontSize: '16px',
+                            fontWeight: 'bold',
+                            cursor: 'pointer',
+                            transition: 'background 0.3s'
+                        }}
+                        onMouseEnter={e => e.target.style.background = '#764ba2'}
+                        onMouseLeave={e => e.target.style.background = '#667eea'}
+                    >
+                        ✉️ Send Email
+                    </button>
+                </form>
+
+                <div style={{
+                    marginTop: '30px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    gap: '20px',
+                    flexWrap: 'wrap'
+                }}>
+                    <div>
+                        <p style={{ color: 'white', fontSize: '12px' }}>📞 Call/WhatsApp</p>
+                        <a href="tel:923288716168" style={{ color: '#ffd700', fontSize: '18px', fontWeight: 'bold', textDecoration: 'none' }}>0328-8716168</a>
+                    </div>
+                    <div>
+                        <p style={{ color: 'white', fontSize: '12px' }}>📧 Email</p>
+                        <a href="mailto:nehalrauf199@gmail.com" style={{ color: '#ffd700', fontSize: '18px', fontWeight: 'bold', textDecoration: 'none' }}>nehalrauf199@gmail.com</a>
                     </div>
                 </div>
-            </section>
-
-            <footer style={{
-                backgroundColor: '#333',
-                color: '#999',
-                textAlign: 'center',
-                padding: '20px',
-                fontSize: '12px'
-            }}>
-                <p>© 2026 Nehal Rauf. Available for hire immediately.</p>
-                <div style={{ marginTop: '8px' }}>
-                    <a href="https://github.com/nehalrauf199-sudO" target="_blank" style={{ color: '#999', margin: '0 8px', textDecoration: 'none' }}>GitHub</a>
-                    <a href="#home" style={{ color: '#999', margin: '0 8px', textDecoration: 'none' }}>Back to Top ↑</a>
-                </div>
-            </footer>
         </div>
-    )
+      </section >
+
+        <footer style={{
+            backgroundColor: '#333',
+            color: '#999',
+            textAlign: 'center',
+            padding: '20px',
+            fontSize: '12px'
+        }}>
+            <p>© 2026 Nehal Rauf. Available for hire immediately.</p>
+            <div style={{ marginTop: '8px' }}>
+                <a href="https://github.com/nehalrauf199-sudO" target="_blank" style={{ color: '#999', margin: '0 8px', textDecoration: 'none' }}>GitHub</a>
+                <a href="#home" style={{ color: '#999', margin: '0 8px', textDecoration: 'none' }}>Back to Top ↑</a>
+            </div>
+        </footer>
+    </div >
+  )
 }
