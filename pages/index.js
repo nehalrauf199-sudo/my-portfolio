@@ -54,25 +54,22 @@ export default function Home() {
                     alignItems: 'center',
                     padding: '20px'
                 }}>
-                    {/* Logo - NOW VISIBLE */}
                     <h1 style={{
                         fontSize: '28px',
                         fontWeight: 'bold',
-                        color: '#333',
+                        color: scrolled ? '#333' : 'white',
                         margin: 0,
                         cursor: 'pointer'
                     }}>
-                        Nehal.dev
+                        Nehal Rauf
                     </h1>
 
-                    {/* Desktop Menu */}
                     <div className="desktop-menu" style={{ display: 'flex', gap: '30px' }}>
-                        <a href="#home" style={{ fontSize: '18px', fontWeight: '500', textDecoration: 'none', color: '#333' }}>Home</a>
-                        <a href="#projects" style={{ fontSize: '18px', fontWeight: '500', textDecoration: 'none', color: '#333' }}>Projects</a>
-                        <a href="#contact" style={{ fontSize: '18px', fontWeight: '500', textDecoration: 'none', color: '#333' }}>Contact</a>
+                        <a href="#home" style={{ fontSize: '18px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Home</a>
+                        <a href="#projects" style={{ fontSize: '18px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Projects</a>
+                        <a href="#contact" style={{ fontSize: '18px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Contact</a>
                     </div>
 
-                    {/* Hamburger Button */}
                     <button
                         className="hamburger-btn"
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -82,14 +79,13 @@ export default function Home() {
                             border: 'none',
                             fontSize: '30px',
                             cursor: 'pointer',
-                            color: '#333'
+                            color: scrolled ? '#333' : 'white'
                         }}
                     >
                         ☰
                     </button>
                 </div>
 
-                {/* Mobile Menu */}
                 {isMenuOpen && (
                     <div style={{
                         backgroundColor: 'white',
@@ -123,7 +119,6 @@ export default function Home() {
                     gap: '50px',
                     alignItems: 'center'
                 }}>
-                    {/* Text Content */}
                     <div>
                         <h1 className="hero-title" style={{
                             fontSize: '56px',
@@ -132,13 +127,13 @@ export default function Home() {
                             marginBottom: '20px',
                             lineHeight: '1.2'
                         }}>
-                            Hire Me As Your
+                            I'm <span style={{ color: '#ffd700' }}>Nehal Rauf</span>
                             <span style={{
                                 display: 'block',
                                 color: '#ffd700',
-                                fontSize: '60px'
+                                fontSize: '40px'
                             }}>
-                                Next Developer
+                                Full-Stack Developer
                             </span>
                         </h1>
                         <p className="hero-subtitle" style={{
@@ -147,11 +142,10 @@ export default function Home() {
                             lineHeight: '1.6',
                             marginBottom: '30px'
                         }}>
-                            Full-Stack Developer with 3.49 GPA. I build fast, responsive websites that get results.
-                            Available for freelance and full-time opportunities.
+                            Computer Science undergraduate with 3.49 GPA. I build fast, responsive websites
+                            that get results. Available for freelance and full-time opportunities.
                         </p>
 
-                        {/* CTA Buttons */}
                         <div className="hero-buttons" style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
                             <a href="#contact" style={{
                                 backgroundColor: '#ffd700',
@@ -186,7 +180,6 @@ export default function Home() {
                             </a>
                         </div>
 
-                        {/* Quick Stats */}
                         <div className="stats-container" style={{
                             display: 'flex',
                             gap: '30px',
@@ -253,15 +246,15 @@ export default function Home() {
                 backgroundColor: '#f8f9fa'
             }}>
                 <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
-                    <h2 style={{ fontSize: '42px', color: '#333', marginBottom: '15px' }}>What I Can Do For You</h2>
-                    <p style={{ fontSize: '18px', color: '#666', marginBottom: '50px' }}>Technologies I master to build your dream project</p>
+                    <h2 style={{ fontSize: '42px', color: '#333', marginBottom: '15px' }}>Technical Skills</h2>
+                    <p style={{ fontSize: '18px', color: '#666', marginBottom: '50px' }}>Technologies I master</p>
 
                     <div style={{
                         display: 'grid',
                         gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
                         gap: '20px'
                     }}>
-                        {['Next.js', 'React', 'Node.js', 'MongoDB', 'Tailwind', 'JavaScript'].map(skill => (
+                        {['Next.js', 'React', 'Node.js', 'MongoDB', 'Tailwind CSS', 'JavaScript', 'Python', 'HTML/CSS'].map(skill => (
                             <div key={skill} style={{
                                 backgroundColor: 'white',
                                 padding: '20px',
@@ -272,8 +265,7 @@ export default function Home() {
                                 onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-5px)'}
                                 onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}>
                                 <p style={{ fontSize: '40px', margin: '0' }}>⚡</p>
-                                <h3 style={{ fontSize: '20px', margin: '10px 0' }}>{skill}</h3>
-                                <p style={{ color: '#666', fontSize: '14px', margin: 0 }}>Expert</p>
+                                <h3 style={{ fontSize: '18px', margin: '10px 0' }}>{skill}</h3>
                             </div>
                         ))}
                     </div>
@@ -286,8 +278,8 @@ export default function Home() {
                 backgroundColor: 'white'
             }}>
                 <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-                    <h2 style={{ fontSize: '42px', textAlign: 'center', color: '#333', marginBottom: '15px' }}>My Best Work</h2>
-                    <p style={{ fontSize: '18px', textAlign: 'center', color: '#666', marginBottom: '50px' }}>Projects that showcase my skills</p>
+                    <h2 style={{ fontSize: '42px', textAlign: 'center', color: '#333', marginBottom: '15px' }}>My Projects</h2>
+                    <p style={{ fontSize: '18px', textAlign: 'center', color: '#666', marginBottom: '50px' }}>Here's what I've built</p>
 
                     {/* ISTS Project */}
                     <div style={{
@@ -311,13 +303,13 @@ export default function Home() {
                                     display: 'inline-block',
                                     marginBottom: '20px'
                                 }}>Featured Project</span>
-                                <h3 style={{ fontSize: '32px', color: '#333', marginBottom: '20px' }}>ISTS Educational Platform</h3>
+                                <h3 style={{ fontSize: '32px', color: '#333', marginBottom: '20px' }}>ISTS Educational Website</h3>
                                 <p style={{ fontSize: '16px', color: '#666', lineHeight: '1.6', marginBottom: '20px' }}>
                                     Complete web platform for an educational institute with event management,
-                                    user registration, and dynamic content system.
+                                    user registration system, and dynamic content management. Used by 1000+ students.
                                 </p>
                                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginBottom: '30px' }}>
-                                    {['Next.js', 'React', 'Node.js', 'MongoDB', 'Tailwind'].map(tech => (
+                                    {['Next.js', 'React', 'Node.js', 'MongoDB', 'Tailwind CSS'].map(tech => (
                                         <span key={tech} style={{
                                             backgroundColor: '#e0e7ff',
                                             color: '#667eea',
@@ -358,28 +350,6 @@ export default function Home() {
                             </div>
                         </div>
                     </div>
-
-                    {/* Call to Action */}
-                    <div style={{
-                        backgroundColor: '#667eea',
-                        borderRadius: '20px',
-                        padding: '40px',
-                        textAlign: 'center',
-                        color: 'white'
-                    }}>
-                        <h3 style={{ fontSize: '28px', marginBottom: '15px' }}>Need a Website?</h3>
-                        <p style={{ fontSize: '18px', marginBottom: '25px' }}>I'm available for freelance projects. Let's build something amazing!</p>
-                        <a href="#contact" style={{
-                            backgroundColor: 'white',
-                            color: '#667eea',
-                            padding: '14px 35px',
-                            borderRadius: '50px',
-                            textDecoration: 'none',
-                            fontSize: '18px',
-                            fontWeight: 'bold',
-                            display: 'inline-block'
-                        }}>Start a Project →</a>
-                    </div>
                 </div>
             </section>
 
@@ -390,7 +360,7 @@ export default function Home() {
             }}>
                 <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
                     <h2 style={{ fontSize: '42px', color: '#333', marginBottom: '15px' }}>Why Hire Me?</h2>
-                    <p style={{ fontSize: '18px', color: '#666', marginBottom: '50px' }}>What makes me different from other developers</p>
+                    <p style={{ fontSize: '18px', color: '#666', marginBottom: '50px' }}>What makes me different</p>
 
                     <div style={{
                         display: 'grid',
@@ -426,8 +396,10 @@ export default function Home() {
                 backgroundColor: '#667eea'
             }}>
                 <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
-                    <h2 style={{ fontSize: '42px', color: 'white', marginBottom: '15px' }}>Ready to Hire Me?</h2>
-                    <p style={{ fontSize: '20px', color: '#f0f0f0', marginBottom: '40px' }}>Let's discuss your project. I respond within 2 hours.</p>
+                    <h2 style={{ fontSize: '42px', color: 'white', marginBottom: '15px' }}>Get In Touch</h2>
+                    <p style={{ fontSize: '20px', color: '#f0f0f0', marginBottom: '40px' }}>
+                        Ready to work together? Let's discuss your project!
+                    </p>
 
                     <div style={{
                         backgroundColor: 'white',
@@ -456,7 +428,7 @@ export default function Home() {
                             }} />
                         </div>
                         <div style={{ marginBottom: '20px' }}>
-                            <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>Project Details</label>
+                            <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>Your Message</label>
                             <textarea rows="4" placeholder="Tell me about your project..." style={{
                                 width: '100%',
                                 padding: '12px',
@@ -497,7 +469,6 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* Footer */}
             <footer style={{
                 backgroundColor: '#333',
                 color: '#999',
