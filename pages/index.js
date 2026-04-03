@@ -4,32 +4,12 @@ import { useState, useEffect } from 'react'
 export default function Home() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [scrolled, setScrolled] = useState(false)
-    const [formStatus, setFormStatus] = useState('')
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 50)
         window.addEventListener('scroll', handleScroll)
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        const name = e.target.name.value
-        const email = e.target.email.value
-        const message = e.target.message.value
-
-        if (!name || !email || !message) {
-            setFormStatus('❌ Please fill all fields')
-            return
-        }
-
-        const subject = `Portfolio Contact from ${name}`
-        const body = `Name: ${name}%0A%0AEmail: ${email}%0A%0AMessage:%0A${message}`
-        window.location.href = `mailto:nehalrauf199@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`
-
-        setFormStatus('✅ Opening your email app...')
-        setTimeout(() => setFormStatus(''), 3000)
-    }
 
     return (
         <div style={{ fontFamily: 'Arial, sans-serif' }}>
@@ -48,13 +28,12 @@ export default function Home() {
         }
         .animate-float { animation: float 3s ease-in-out infinite; }
         
-        /* Mobile Styles */
         @media (max-width: 768px) {
           .desktop-menu {
             display: none !important;
           }
           .hamburger-btn {
-            display: block !important;
+            display: flex !important;
           }
           .hero-grid { 
             grid-template-columns: 1fr !important; 
@@ -92,21 +71,9 @@ export default function Home() {
           .projects-grid {
             grid-template-columns: 1fr !important;
           }
-          .projects-grid > div {
-            padding: 20px !important;
-          }
           .features-grid {
             grid-template-columns: 1fr !important;
             gap: 15px !important;
-          }
-          .contact-form {
-            padding: 20px !important;
-          }
-          .project-clickable {
-            min-height: 200px !important;
-          }
-          .whatsapp-btn {
-            width: 100% !important;
           }
         }
         
@@ -154,7 +121,7 @@ export default function Home() {
                         <a href="#contact" style={{ fontSize: '16px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Contact</a>
                     </div>
 
-                    {/* Hamburger Button - FIXED */}
+                    {/* Hamburger Button */}
                     <button
                         className="hamburger-btn"
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -164,37 +131,38 @@ export default function Home() {
                             fontSize: '28px',
                             cursor: 'pointer',
                             color: scrolled ? '#333' : 'white',
-                            display: 'block',
-                            padding: '5px 10px'
+                            padding: '5px 10px',
+                            alignItems: 'center',
+                            justifyContent: 'center'
                         }}
                     >
                         {isMenuOpen ? '✕' : '☰'}
                     </button>
                 </div>
 
-                {/* Mobile Menu - FIXED */}
+                {/* Mobile Menu */}
                 {isMenuOpen && (
                     <div className="mobile-menu" style={{
                         backgroundColor: scrolled ? 'white' : '#667eea',
                         padding: '20px',
                         display: 'flex',
                         flexDirection: 'column',
-                        gap: '15px',
-                        borderTop: scrolled ? '1px solid #eee' : '1px solid rgba(255,255,255,0.2)',
+                        gap: '10px',
                         position: 'absolute',
                         top: '60px',
                         left: 0,
                         right: 0,
-                        zIndex: 999
+                        zIndex: 999,
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
                     }}>
                         <a
                             href="#home"
                             style={{
                                 fontSize: '18px',
-                                padding: '12px',
+                                padding: '12px 15px',
                                 textDecoration: 'none',
                                 color: scrolled ? '#333' : 'white',
-                                borderBottom: scrolled ? '1px solid #eee' : '1px solid rgba(255,255,255,0.1)',
+                                borderBottom: '1px solid rgba(0,0,0,0.1)',
                                 display: 'block'
                             }}
                             onClick={() => setIsMenuOpen(false)}
@@ -205,10 +173,10 @@ export default function Home() {
                             href="#projects"
                             style={{
                                 fontSize: '18px',
-                                padding: '12px',
+                                padding: '12px 15px',
                                 textDecoration: 'none',
                                 color: scrolled ? '#333' : 'white',
-                                borderBottom: scrolled ? '1px solid #eee' : '1px solid rgba(255,255,255,0.1)',
+                                borderBottom: '1px solid rgba(0,0,0,0.1)',
                                 display: 'block'
                             }}
                             onClick={() => setIsMenuOpen(false)}
@@ -219,7 +187,7 @@ export default function Home() {
                             href="#contact"
                             style={{
                                 fontSize: '18px',
-                                padding: '12px',
+                                padding: '12px 15px',
                                 textDecoration: 'none',
                                 color: scrolled ? '#333' : 'white',
                                 display: 'block'
@@ -286,8 +254,7 @@ export default function Home() {
                                 fontWeight: 'bold',
                                 borderRadius: '50px',
                                 textDecoration: 'none',
-                                display: 'inline-block',
-                                transition: 'transform 0.3s'
+                                display: 'inline-block'
                             }}>
                                 📞 Hire Me Now
                             </a>
@@ -384,8 +351,7 @@ export default function Home() {
                                 backgroundColor: 'white',
                                 padding: '15px',
                                 borderRadius: '10px',
-                                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-                                transition: 'transform 0.3s'
+                                boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
                             }}>
                                 <p style={{ fontSize: '30px', margin: '0' }}>⚡</p>
                                 <h3 style={{ fontSize: '14px', margin: '8px 0' }}>{skill}</h3>
@@ -466,7 +432,6 @@ export default function Home() {
                                 href="https://www.ists-institute.com"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="project-clickable"
                                 style={{
                                     background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                                     display: 'flex',
@@ -475,19 +440,13 @@ export default function Home() {
                                     padding: '30px',
                                     minHeight: '250px',
                                     cursor: 'pointer',
-                                    textDecoration: 'none',
-                                    transition: 'transform 0.3s'
+                                    textDecoration: 'none'
                                 }}
-                                onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.02)'}
-                                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
                             >
                                 <div style={{ textAlign: 'center' }}>
                                     <p style={{ fontSize: '60px', margin: 0 }}>🏫</p>
                                     <p style={{ color: 'white', fontSize: '16px', marginTop: '15px', fontWeight: 'bold' }}>
                                         Click to Visit Website →
-                                    </p>
-                                    <p style={{ color: '#ffd700', fontSize: '12px', marginTop: '8px' }}>
-                                        www.ists-institute.com
                                     </p>
                                 </div>
                             </a>
@@ -533,159 +492,63 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* Contact Section */}
+            {/* Contact Section - ONLY WHATSAPP */}
             <section id="contact" style={{
                 padding: '60px 20px',
-                backgroundColor: '#667eea'
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
             }}>
                 <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
-                    <h2 style={{ fontSize: '32px', color: 'white', marginBottom: '10px' }}>Get In Touch</h2>
-                    <p style={{ fontSize: '16px', color: '#f0f0f0', marginBottom: '30px' }}>
-                        Choose your preferred way to contact me!
+                    <h2 style={{ fontSize: '32px', color: 'white', marginBottom: '15px' }}>Get In Touch</h2>
+                    <p style={{ fontSize: '18px', color: '#f0f0f0', marginBottom: '40px' }}>
+                        Let's discuss your project! Click the button below to message me directly.
                     </p>
 
+                    {/* WhatsApp Button */}
                     <a
                         href="https://wa.me/923288716168?text=Hi%20Nehal,%20I%20saw%20your%20portfolio%20and%20I'm%20interested%20in%20working%20with%20you"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="whatsapp-btn"
                         style={{
                             backgroundColor: '#25D366',
                             color: 'white',
-                            padding: '16px 30px',
-                            fontSize: '20px',
+                            padding: '18px 40px',
+                            fontSize: '22px',
                             fontWeight: 'bold',
                             borderRadius: '50px',
                             textDecoration: 'none',
                             display: 'inline-block',
-                            marginBottom: '25px',
-                            width: '100%',
-                            maxWidth: '400px',
+                            marginBottom: '40px',
                             transition: 'transform 0.3s',
                             boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-                            border: 'none',
-                            cursor: 'pointer',
-                            textAlign: 'center'
+                            cursor: 'pointer'
                         }}
                         onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
                         onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
                     >
-                        💬 Message me on WhatsApp
+                        💬 Message Me on WhatsApp
                     </a>
 
-                    <p style={{ color: 'white', marginBottom: '20px', fontSize: '14px' }}>
-                        OR fill out the form below
-                    </p>
-
-                    <form onSubmit={handleSubmit} className="contact-form" style={{
-                        backgroundColor: 'white',
-                        borderRadius: '16px',
-                        padding: '30px',
-                        textAlign: 'left'
-                    }}>
-                        <div style={{ marginBottom: '15px' }}>
-                            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Your Name *</label>
-                            <input
-                                type="text"
-                                name="name"
-                                placeholder="John Doe"
-                                required
-                                style={{
-                                    width: '100%',
-                                    padding: '12px',
-                                    border: '1px solid #ddd',
-                                    borderRadius: '8px',
-                                    fontSize: '14px'
-                                }}
-                            />
-                        </div>
-                        <div style={{ marginBottom: '15px' }}>
-                            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Email Address *</label>
-                            <input
-                                type="email"
-                                name="email"
-                                placeholder="you@example.com"
-                                required
-                                style={{
-                                    width: '100%',
-                                    padding: '12px',
-                                    border: '1px solid #ddd',
-                                    borderRadius: '8px',
-                                    fontSize: '14px'
-                                }}
-                            />
-                        </div>
-                        <div style={{ marginBottom: '20px' }}>
-                            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Your Message *</label>
-                            <textarea
-                                name="message"
-                                rows="3"
-                                placeholder="Tell me about your project..."
-                                required
-                                style={{
-                                    width: '100%',
-                                    padding: '12px',
-                                    border: '1px solid #ddd',
-                                    borderRadius: '8px',
-                                    fontSize: '14px'
-                                }}
-                            ></textarea>
-                        </div>
-
-                        {formStatus && (
-                            <p style={{
-                                marginBottom: '15px',
-                                padding: '10px',
-                                backgroundColor: formStatus.includes('✅') ? '#d4edda' : '#f8d7da',
-                                color: formStatus.includes('✅') ? '#155724' : '#721c24',
-                                borderRadius: '8px',
-                                fontSize: '14px',
-                                textAlign: 'center'
-                            }}>
-                                {formStatus}
-                            </p>
-                        )}
-
-                        <button
-                            type="submit"
-                            style={{
-                                backgroundColor: '#667eea',
-                                color: 'white',
-                                width: '100%',
-                                padding: '12px',
-                                border: 'none',
-                                borderRadius: '8px',
-                                fontSize: '16px',
-                                fontWeight: 'bold',
-                                cursor: 'pointer',
-                                transition: 'background 0.3s'
-                            }}
-                            onMouseEnter={e => e.target.style.background = '#764ba2'}
-                            onMouseLeave={e => e.target.style.background = '#667eea'}
-                        >
-                            ✉️ Send Email
-                        </button>
-                    </form>
-
+                    {/* Contact Info */}
                     <div style={{
-                        marginTop: '30px',
                         display: 'flex',
                         justifyContent: 'center',
-                        gap: '20px',
-                        flexWrap: 'wrap'
+                        gap: '30px',
+                        flexWrap: 'wrap',
+                        marginTop: '20px'
                     }}>
                         <div>
-                            <p style={{ color: 'white', fontSize: '12px' }}>📞 Call/WhatsApp</p>
-                            <a href="tel:923288716168" style={{ color: '#ffd700', fontSize: '18px', fontWeight: 'bold', textDecoration: 'none' }}>0328-8716168</a>
+                            <p style={{ color: 'white', fontSize: '14px', marginBottom: '5px' }}>📞 Call / WhatsApp</p>
+                            <a href="tel:923288716168" style={{ color: '#ffd700', fontSize: '20px', fontWeight: 'bold', textDecoration: 'none' }}>0328-8716168</a>
                         </div>
                         <div>
-                            <p style={{ color: 'white', fontSize: '12px' }}>📧 Email</p>
-                            <a href="mailto:nehalrauf199@gmail.com" style={{ color: '#ffd700', fontSize: '18px', fontWeight: 'bold', textDecoration: 'none' }}>nehalrauf199@gmail.com</a>
+                            <p style={{ color: 'white', fontSize: '14px', marginBottom: '5px' }}>📧 Email</p>
+                            <a href="mailto:nehalrauf199@gmail.com" style={{ color: '#ffd700', fontSize: '20px', fontWeight: 'bold', textDecoration: 'none' }}>nehalrauf199@gmail.com</a>
                         </div>
                     </div>
                 </div>
             </section>
 
+            {/* Footer */}
             <footer style={{
                 backgroundColor: '#333',
                 color: '#999',
