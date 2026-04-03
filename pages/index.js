@@ -48,9 +48,14 @@ export default function Home() {
         }
         .animate-float { animation: float 3s ease-in-out infinite; }
         
+        /* Mobile Styles */
         @media (max-width: 768px) {
-          .desktop-menu { display: none !important; }
-          .hamburger-btn { display: block !important; }
+          .desktop-menu {
+            display: none !important;
+          }
+          .hamburger-btn {
+            display: block !important;
+          }
           .hero-grid { 
             grid-template-columns: 1fr !important; 
             text-align: center !important;
@@ -104,6 +109,15 @@ export default function Home() {
             width: 100% !important;
           }
         }
+        
+        @media (min-width: 769px) {
+          .hamburger-btn {
+            display: none !important;
+          }
+          .mobile-menu {
+            display: none !important;
+          }
+        }
       `}</style>
 
             {/* Navigation */}
@@ -133,40 +147,87 @@ export default function Home() {
                         Nehal Rauf
                     </h1>
 
+                    {/* Desktop Menu */}
                     <div className="desktop-menu" style={{ display: 'flex', gap: '30px' }}>
                         <a href="#home" style={{ fontSize: '16px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Home</a>
                         <a href="#projects" style={{ fontSize: '16px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Projects</a>
                         <a href="#contact" style={{ fontSize: '16px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Contact</a>
                     </div>
 
+                    {/* Hamburger Button - FIXED */}
                     <button
                         className="hamburger-btn"
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                         style={{
-                            display: 'none',
                             background: 'none',
                             border: 'none',
                             fontSize: '28px',
                             cursor: 'pointer',
-                            color: scrolled ? '#333' : 'white'
+                            color: scrolled ? '#333' : 'white',
+                            display: 'block',
+                            padding: '5px 10px'
                         }}
                     >
-                        ☰
+                        {isMenuOpen ? '✕' : '☰'}
                     </button>
                 </div>
 
+                {/* Mobile Menu - FIXED */}
                 {isMenuOpen && (
-                    <div style={{
-                        backgroundColor: 'white',
+                    <div className="mobile-menu" style={{
+                        backgroundColor: scrolled ? 'white' : '#667eea',
                         padding: '20px',
                         display: 'flex',
                         flexDirection: 'column',
                         gap: '15px',
-                        borderTop: '1px solid #eee'
+                        borderTop: scrolled ? '1px solid #eee' : '1px solid rgba(255,255,255,0.2)',
+                        position: 'absolute',
+                        top: '60px',
+                        left: 0,
+                        right: 0,
+                        zIndex: 999
                     }}>
-                        <a href="#home" style={{ fontSize: '18px', padding: '10px', textDecoration: 'none', color: '#333' }} onClick={() => setIsMenuOpen(false)}>🏠 Home</a>
-                        <a href="#projects" style={{ fontSize: '18px', padding: '10px', textDecoration: 'none', color: '#333' }} onClick={() => setIsMenuOpen(false)}>📁 Projects</a>
-                        <a href="#contact" style={{ fontSize: '18px', padding: '10px', textDecoration: 'none', color: '#333' }} onClick={() => setIsMenuOpen(false)}>📞 Contact</a>
+                        <a
+                            href="#home"
+                            style={{
+                                fontSize: '18px',
+                                padding: '12px',
+                                textDecoration: 'none',
+                                color: scrolled ? '#333' : 'white',
+                                borderBottom: scrolled ? '1px solid #eee' : '1px solid rgba(255,255,255,0.1)',
+                                display: 'block'
+                            }}
+                            onClick={() => setIsMenuOpen(false)}
+                        >
+                            🏠 Home
+                        </a>
+                        <a
+                            href="#projects"
+                            style={{
+                                fontSize: '18px',
+                                padding: '12px',
+                                textDecoration: 'none',
+                                color: scrolled ? '#333' : 'white',
+                                borderBottom: scrolled ? '1px solid #eee' : '1px solid rgba(255,255,255,0.1)',
+                                display: 'block'
+                            }}
+                            onClick={() => setIsMenuOpen(false)}
+                        >
+                            📁 Projects
+                        </a>
+                        <a
+                            href="#contact"
+                            style={{
+                                fontSize: '18px',
+                                padding: '12px',
+                                textDecoration: 'none',
+                                color: scrolled ? '#333' : 'white',
+                                display: 'block'
+                            }}
+                            onClick={() => setIsMenuOpen(false)}
+                        >
+                            📞 Contact
+                        </a>
                     </div>
                 )}
             </nav>
@@ -483,7 +544,6 @@ export default function Home() {
                         Choose your preferred way to contact me!
                     </p>
 
-                    {/* WhatsApp Button */}
                     <a
                         href="https://wa.me/923288716168?text=Hi%20Nehal,%20I%20saw%20your%20portfolio%20and%20I'm%20interested%20in%20working%20with%20you"
                         target="_blank"
@@ -504,7 +564,8 @@ export default function Home() {
                             transition: 'transform 0.3s',
                             boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
                             border: 'none',
-                            cursor: 'pointer'
+                            cursor: 'pointer',
+                            textAlign: 'center'
                         }}
                         onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
                         onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
