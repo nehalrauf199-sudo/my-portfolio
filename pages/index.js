@@ -4,12 +4,34 @@ import { useState, useEffect } from 'react'
 export default function Home() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [scrolled, setScrolled] = useState(false)
+    const [formStatus, setFormStatus] = useState('')
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 50)
         window.addEventListener('scroll', handleScroll)
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        const form = e.target
+        const name = form.name.value
+        const email = form.email.value
+        const message = form.message.value
+
+        if (!name || !email || !message) {
+            setFormStatus('❌ Please fill all fields')
+            return
+        }
+
+        // Create mailto link
+        const subject = `Portfolio Contact from ${name}`
+        const body = `Name: ${name}%0A%0AEmail: ${email}%0A%0AMessage:%0A${message}`
+        window.location.href = `mailto:nehalrauf199@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`
+
+        setFormStatus('✅ Opening your email app...')
+        setTimeout(() => setFormStatus(''), 3000)
+    }
 
     return (
         <div style={{ fontFamily: 'Arial, sans-serif' }}>
@@ -28,7 +50,6 @@ export default function Home() {
         }
         .animate-float { animation: float 3s ease-in-out infinite; }
         
-        /* Mobile Styles */
         @media (max-width: 768px) {
           .desktop-menu { display: none !important; }
           .hamburger-btn { display: block !important; }
@@ -49,7 +70,6 @@ export default function Home() {
             width: 80% !important;
             text-align: center !important;
           }
-          /* Stats in one row */
           .stats-container {
             display: flex !important;
             flex-direction: row !important;
@@ -58,63 +78,29 @@ export default function Home() {
             gap: 10px !important;
             margin-top: 30px !important;
           }
-          .stats-container div {
-            flex: 1 !important;
-            text-align: center !important;
-          }
-          .stats-container p:first-child {
-            font-size: 24px !important;
-          }
-          .stats-container p:last-child {
-            font-size: 12px !important;
-          }
-          /* Profile image */
           .profile-image-container {
             width: 200px !important;
             height: 200px !important;
           }
-          /* Skills grid */
           .skills-grid {
             grid-template-columns: repeat(2, 1fr) !important;
             gap: 12px !important;
           }
-          /* Projects section */
           .projects-grid {
             grid-template-columns: 1fr !important;
           }
           .projects-grid > div {
             padding: 20px !important;
           }
-          .project-image {
-            min-height: 150px !important;
-          }
-          /* Why hire me grid */
           .features-grid {
             grid-template-columns: 1fr !important;
             gap: 15px !important;
           }
-          /* Contact form */
-          .contact-grid {
-            grid-template-columns: 1fr !important;
+          .contact-form {
             padding: 20px !important;
           }
-          /* Stats row fix */
-          .stats-row {
-            display: flex !important;
-            flex-direction: row !important;
-            justify-content: space-around !important;
-            width: 100% !important;
-          }
-        }
-        
-        @media (min-width: 769px) and (max-width: 1024px) {
-          .hero-title { font-size: 44px !important; }
-          .profile-image-container { width: 280px !important; height: 280px !important; }
-          .skills-grid {
-            grid-template-columns: repeat(3, 1fr) !important;
-          }
-          .features-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
+          .project-clickable {
+            min-height: 200px !important;
           }
         }
       `}</style>
@@ -201,7 +187,6 @@ export default function Home() {
                     gap: '50px',
                     alignItems: 'center'
                 }}>
-                    {/* Left Side - Text */}
                     <div>
                         <h1 className="hero-title" style={{
                             fontSize: '48px',
@@ -259,7 +244,6 @@ export default function Home() {
                             </a>
                         </div>
 
-                        {/* Stats - Fixed for mobile */}
                         <div className="stats-container" style={{
                             display: 'flex',
                             gap: '30px',
@@ -281,7 +265,6 @@ export default function Home() {
                         </div>
                     </div>
 
-                    {/* Right Side - Photo */}
                     <div style={{ textAlign: 'center' }}>
                         <div className="profile-image-container animate-float" style={{
                             width: '300px',
@@ -416,19 +399,37 @@ export default function Home() {
                                     }}>🔗 Live Demo</a>
                                 </div>
                             </div>
-                            <div className="project-image" style={{
-                                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                padding: '30px',
-                                minHeight: '250px'
-                            }}>
+
+                            {/* CLICKABLE PROJECT IMAGE - NOW OPENS WEBSITE */}
+                            <a
+                                href="https://www.ists-institute.com"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="project-clickable"
+                                style={{
+                                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    padding: '30px',
+                                    minHeight: '250px',
+                                    cursor: 'pointer',
+                                    textDecoration: 'none',
+                                    transition: 'transform 0.3s'
+                                }}
+                                onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.02)'}
+                                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                            >
                                 <div style={{ textAlign: 'center' }}>
                                     <p style={{ fontSize: '60px', margin: 0 }}>🏫</p>
-                                    <p style={{ color: 'white', fontSize: '14px', marginTop: '15px' }}>Live Website →</p>
+                                    <p style={{ color: 'white', fontSize: '16px', marginTop: '15px', fontWeight: 'bold' }}>
+                                        Click to Visit Website →
+                                    </p>
+                                    <p style={{ color: '#ffd700', fontSize: '12px', marginTop: '8px' }}>
+                                        www.ists-institute.com
+                                    </p>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -471,7 +472,7 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* Contact Section */}
+            {/* Contact Section with WORKING FORM */}
             <section id="contact" style={{
                 padding: '60px 20px',
                 backgroundColor: '#667eea'
@@ -482,54 +483,104 @@ export default function Home() {
                         Ready to work together? Let's discuss your project!
                     </p>
 
-                    <div style={{
+                    <form onSubmit={handleSubmit} className="contact-form" style={{
                         backgroundColor: 'white',
                         borderRadius: '16px',
                         padding: '30px',
                         textAlign: 'left'
                     }}>
                         <div style={{ marginBottom: '15px' }}>
-                            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Your Name</label>
-                            <input type="text" placeholder="John Doe" style={{
-                                width: '100%',
-                                padding: '10px',
-                                border: '1px solid #ddd',
-                                borderRadius: '8px',
-                                fontSize: '14px'
-                            }} />
+                            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Your Name *</label>
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder="John Doe"
+                                required
+                                style={{
+                                    width: '100%',
+                                    padding: '12px',
+                                    border: '1px solid #ddd',
+                                    borderRadius: '8px',
+                                    fontSize: '14px'
+                                }}
+                            />
                         </div>
                         <div style={{ marginBottom: '15px' }}>
-                            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Email Address</label>
-                            <input type="email" placeholder="you@example.com" style={{
-                                width: '100%',
-                                padding: '10px',
-                                border: '1px solid #ddd',
-                                borderRadius: '8px',
-                                fontSize: '14px'
-                            }} />
+                            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Email Address *</label>
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="you@example.com"
+                                required
+                                style={{
+                                    width: '100%',
+                                    padding: '12px',
+                                    border: '1px solid #ddd',
+                                    borderRadius: '8px',
+                                    fontSize: '14px'
+                                }}
+                            />
                         </div>
                         <div style={{ marginBottom: '20px' }}>
-                            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Your Message</label>
-                            <textarea rows="3" placeholder="Tell me about your project..." style={{
-                                width: '100%',
-                                padding: '10px',
-                                border: '1px solid #ddd',
-                                borderRadius: '8px',
-                                fontSize: '14px'
-                            }}></textarea>
+                            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Your Message *</label>
+                            <textarea
+                                name="message"
+                                rows="3"
+                                placeholder="Tell me about your project..."
+                                required
+                                style={{
+                                    width: '100%',
+                                    padding: '12px',
+                                    border: '1px solid #ddd',
+                                    borderRadius: '8px',
+                                    fontSize: '14px'
+                                }}
+                            ></textarea>
                         </div>
-                        <button style={{
-                            backgroundColor: '#667eea',
-                            color: 'white',
-                            width: '100%',
-                            padding: '12px',
-                            border: 'none',
-                            borderRadius: '8px',
-                            fontSize: '16px',
-                            fontWeight: 'bold',
-                            cursor: 'pointer'
-                        }}>Send Message 📧</button>
-                    </div>
+
+                        {formStatus && (
+                            <p style={{
+                                marginBottom: '15px',
+                                padding: '10px',
+                                backgroundColor: formStatus.includes('✅') ? '#d4edda' : '#f8d7da',
+                                color: formStatus.includes('✅') ? '#155724' : '#721c24',
+                                borderRadius: '8px',
+                                fontSize: '14px',
+                                textAlign: 'center'
+                            }}>
+                                {formStatus}
+                            </p>
+                        )}
+
+                        <button
+                            type="submit"
+                            style={{
+                                backgroundColor: '#667eea',
+                                color: 'white',
+                                width: '100%',
+                                padding: '12px',
+                                border: 'none',
+                                borderRadius: '8px',
+                                fontSize: '16px',
+                                fontWeight: 'bold',
+                                cursor: 'pointer',
+                                transition: 'background 0.3s'
+                            }}
+                            onMouseEnter={e => e.target.style.background = '#764ba2'}
+                            onMouseLeave={e => e.target.style.background = '#667eea'}
+                        >
+                            ✉️ Send Message
+                        </button>
+
+                        <p style={{
+                            fontSize: '12px',
+                            color: '#666',
+                            textAlign: 'center',
+                            marginTop: '15px'
+                        }}>
+                            This will open your email app. I'll respond within 24 hours!
+                        </p>
+                    </form>
 
                     <div style={{
                         marginTop: '30px',
@@ -540,11 +591,11 @@ export default function Home() {
                     }}>
                         <div>
                             <p style={{ color: 'white', fontSize: '12px' }}>📞 Call/WhatsApp</p>
-                            <p style={{ color: '#ffd700', fontSize: '18px', fontWeight: 'bold' }}>0328-8716168</p>
+                            <a href="tel:03288716168" style={{ color: '#ffd700', fontSize: '18px', fontWeight: 'bold', textDecoration: 'none' }}>0328-8716168</a>
                         </div>
                         <div>
                             <p style={{ color: 'white', fontSize: '12px' }}>📧 Email</p>
-                            <p style={{ color: '#ffd700', fontSize: '18px', fontWeight: 'bold' }}>nehalrauf199@gmail.com</p>
+                            <a href="mailto:nehalrauf199@gmail.com" style={{ color: '#ffd700', fontSize: '18px', fontWeight: 'bold', textDecoration: 'none' }}>nehalrauf199@gmail.com</a>
                         </div>
                     </div>
                 </div>
