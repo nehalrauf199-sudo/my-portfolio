@@ -2,7 +2,6 @@ import Head from 'next/head'
 import { useState, useEffect } from 'react'
 
 export default function Home() {
-    const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [scrolled, setScrolled] = useState(false)
 
     useEffect(() => {
@@ -29,12 +28,6 @@ export default function Home() {
         .animate-float { animation: float 3s ease-in-out infinite; }
         
         @media (max-width: 768px) {
-          .desktop-menu {
-            display: none !important;
-          }
-          .hamburger-btn {
-            display: flex !important;
-          }
           .hero-grid { 
             grid-template-columns: 1fr !important; 
             text-align: center !important;
@@ -71,23 +64,23 @@ export default function Home() {
           .projects-grid {
             grid-template-columns: 1fr !important;
           }
+          .projects-grid > div {
+            flex-direction: column !important;
+          }
           .features-grid {
             grid-template-columns: 1fr !important;
             gap: 15px !important;
           }
-        }
-        
-        @media (min-width: 769px) {
-          .hamburger-btn {
-            display: none !important;
+          .nav-links {
+            gap: 15px !important;
           }
-          .mobile-menu {
-            display: none !important;
+          .nav-links a {
+            font-size: 14px !important;
           }
         }
       `}</style>
 
-            {/* Navigation */}
+            {/* Simple Navigation - No Hamburger */}
             <nav style={{
                 position: 'fixed',
                 top: 0,
@@ -95,7 +88,8 @@ export default function Home() {
                 backgroundColor: scrolled ? 'white' : '#667eea',
                 boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.1)' : 'none',
                 transition: 'all 0.3s ease',
-                zIndex: 1000
+                zIndex: 1000,
+                padding: '15px 20px'
             }}>
                 <div style={{
                     maxWidth: '1200px',
@@ -103,7 +97,8 @@ export default function Home() {
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    padding: '15px 20px'
+                    flexWrap: 'wrap',
+                    gap: '15px'
                 }}>
                     <h1 style={{
                         fontSize: '20px',
@@ -114,90 +109,17 @@ export default function Home() {
                         Nehal Rauf
                     </h1>
 
-                    {/* Desktop Menu */}
-                    <div className="desktop-menu" style={{ display: 'flex', gap: '30px' }}>
+                    <div className="nav-links" style={{
+                        display: 'flex',
+                        gap: '30px',
+                        flexWrap: 'wrap',
+                        justifyContent: 'center'
+                    }}>
                         <a href="#home" style={{ fontSize: '16px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Home</a>
                         <a href="#projects" style={{ fontSize: '16px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Projects</a>
                         <a href="#contact" style={{ fontSize: '16px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Contact</a>
                     </div>
-
-                    {/* Hamburger Button */}
-                    <button
-                        className="hamburger-btn"
-                        onClick={() => setIsMenuOpen(!isMenuOpen)}
-                        style={{
-                            background: 'none',
-                            border: 'none',
-                            fontSize: '28px',
-                            cursor: 'pointer',
-                            color: scrolled ? '#333' : 'white',
-                            padding: '5px 10px',
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                        }}
-                    >
-                        {isMenuOpen ? '✕' : '☰'}
-                    </button>
                 </div>
-
-                {/* Mobile Menu */}
-                {isMenuOpen && (
-                    <div className="mobile-menu" style={{
-                        backgroundColor: scrolled ? 'white' : '#667eea',
-                        padding: '20px',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '10px',
-                        position: 'absolute',
-                        top: '60px',
-                        left: 0,
-                        right: 0,
-                        zIndex: 999,
-                        boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
-                    }}>
-                        <a
-                            href="#home"
-                            style={{
-                                fontSize: '18px',
-                                padding: '12px 15px',
-                                textDecoration: 'none',
-                                color: scrolled ? '#333' : 'white',
-                                borderBottom: '1px solid rgba(0,0,0,0.1)',
-                                display: 'block'
-                            }}
-                            onClick={() => setIsMenuOpen(false)}
-                        >
-                            🏠 Home
-                        </a>
-                        <a
-                            href="#projects"
-                            style={{
-                                fontSize: '18px',
-                                padding: '12px 15px',
-                                textDecoration: 'none',
-                                color: scrolled ? '#333' : 'white',
-                                borderBottom: '1px solid rgba(0,0,0,0.1)',
-                                display: 'block'
-                            }}
-                            onClick={() => setIsMenuOpen(false)}
-                        >
-                            📁 Projects
-                        </a>
-                        <a
-                            href="#contact"
-                            style={{
-                                fontSize: '18px',
-                                padding: '12px 15px',
-                                textDecoration: 'none',
-                                color: scrolled ? '#333' : 'white',
-                                display: 'block'
-                            }}
-                            onClick={() => setIsMenuOpen(false)}
-                        >
-                            📞 Contact
-                        </a>
-                    </div>
-                )}
             </nav>
 
             {/* Hero Section */}
@@ -207,7 +129,7 @@ export default function Home() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                padding: '80px 20px'
+                padding: '100px 20px 60px'
             }}>
                 <div className="hero-grid" style={{
                     maxWidth: '1200px',
@@ -492,7 +414,7 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* Contact Section - ONLY WHATSAPP */}
+            {/* Contact Section - Only WhatsApp */}
             <section id="contact" style={{
                 padding: '60px 20px',
                 background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
@@ -503,7 +425,6 @@ export default function Home() {
                         Let's discuss your project! Click the button below to message me directly.
                     </p>
 
-                    {/* WhatsApp Button */}
                     <a
                         href="https://wa.me/923288716168?text=Hi%20Nehal,%20I%20saw%20your%20portfolio%20and%20I'm%20interested%20in%20working%20with%20you"
                         target="_blank"
@@ -528,7 +449,6 @@ export default function Home() {
                         💬 Message Me on WhatsApp
                     </a>
 
-                    {/* Contact Info */}
                     <div style={{
                         display: 'flex',
                         justifyContent: 'center',
@@ -548,7 +468,6 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* Footer */}
             <footer style={{
                 backgroundColor: '#333',
                 color: '#999',
