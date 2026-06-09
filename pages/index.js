@@ -163,7 +163,7 @@ export default function Home() {
                             lineHeight: '1.5',
                             marginBottom: '25px'
                         }}>
-                            Computer Science undergraduate with 3.49 GPA. I build fast, responsive websites
+                            Computer Science undergraduate with 3.84 GPA. I build fast, responsive websites
                             that get results. Available for freelance and full-time opportunities.
                         </p>
 
