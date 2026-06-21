@@ -12,25 +12,6 @@ export default function Home() {
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        const name = e.target.name.value
-        const email = e.target.email.value
-        const message = e.target.message.value
-
-        if (!name || !email || !message) {
-            setFormStatus('❌ Please fill all fields')
-            return
-        }
-
-        const subject = `Portfolio Contact from ${name}`
-        const body = `Name: ${name}%0A%0AEmail: ${email}%0A%0AMessage:%0A${message}`
-        window.location.href = `mailto:nehalrauf199@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`
-
-        setFormStatus('✅ Opening your email app...')
-        setTimeout(() => setFormStatus(''), 3000)
-    }
-
     return (
         <div style={{ fontFamily: 'Arial, sans-serif' }}>
             <Head>
@@ -40,71 +21,62 @@ export default function Home() {
             </Head>
 
             <style jsx global>{`
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { overflow-x: hidden; }
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
-        }
-        .animate-float { animation: float 3s ease-in-out infinite; }
-        
-        @media (max-width: 768px) {
-          .desktop-menu { display: none !important; }
-          .hamburger-btn { display: block !important; }
-          .hero-grid { 
-            grid-template-columns: 1fr !important; 
-            text-align: center !important;
-            gap: 30px !important;
-          }
-          .hero-title { font-size: 36px !important; }
-          .hero-subtitle { font-size: 16px !important; }
-          .hero-buttons { 
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 15px !important;
-            align-items: center !important;
-          }
-          .hero-buttons a {
-            width: 80% !important;
-            text-align: center !important;
-          }
-          .stats-container {
-            display: flex !important;
-            flex-direction: row !important;
-            justify-content: space-around !important;
-            flex-wrap: nowrap !important;
-            gap: 10px !important;
-            margin-top: 30px !important;
-          }
-          .profile-image-container {
-            width: 200px !important;
-            height: 200px !important;
-          }
-          .skills-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-            gap: 12px !important;
-          }
-          .projects-grid {
-            grid-template-columns: 1fr !important;
-          }
-          .projects-grid > div {
-            flex-direction: column !important;
-          }
-          .features-grid {
-            grid-template-columns: 1fr !important;
-            gap: 15px !important;
-          }
-          .nav-links {
-            gap: 15px !important;
-          }
-          .nav-links a {
-            font-size: 14px !important;
-          }
-          .certificates-grid {
-            grid-template-columns: 1fr !important;
-          }
-        }
-      `}</style>
+                * { margin: 0; padding: 0; box-sizing: border-box; }
+                body { overflow-x: hidden; }
+                @keyframes float {
+                    0%, 100% { transform: translateY(0px); }
+                    50% { transform: translateY(-20px); }
+                }
+                .animate-float { animation: float 3s ease-in-out infinite; }
+                
+                @media (max-width: 768px) {
+                    .desktop-menu { display: none !important; }
+                    .hamburger-btn { display: block !important; }
+                    .hero-grid { 
+                        grid-template-columns: 1fr !important; 
+                        text-align: center !important;
+                        gap: 30px !important;
+                    }
+                    .hero-title { font-size: 32px !important; }
+                    .hero-subtitle { font-size: 16px !important; }
+                    .hero-buttons { 
+                        display: flex !important;
+                        flex-direction: column !important;
+                        gap: 15px !important;
+                        align-items: center !important;
+                    }
+                    .hero-buttons a {
+                        width: 80% !important;
+                        text-align: center !important;
+                    }
+                    .stats-container {
+                        display: flex !important;
+                        flex-direction: row !important;
+                        justify-content: space-around !important;
+                        flex-wrap: nowrap !important;
+                        gap: 10px !important;
+                        margin-top: 30px !important;
+                    }
+                    .profile-image-container {
+                        width: 200px !important;
+                        height: 200px !important;
+                    }
+                    .skills-grid {
+                        grid-template-columns: repeat(2, 1fr) !important;
+                        gap: 12px !important;
+                    }
+                    .features-grid {
+                        grid-template-columns: 1fr !important;
+                        gap: 15px !important;
+                    }
+                    .nav-links {
+                        gap: 15px !important;
+                    }
+                    .nav-links a {
+                        font-size: 14px !important;
+                    }
+                }
+            `}</style>
 
             {/* Navigation */}
             <nav style={{
@@ -136,10 +108,10 @@ export default function Home() {
 
                     {/* Desktop Menu */}
                     <div className="desktop-menu" style={{ display: 'flex', gap: '30px' }}>
-                        <a href="#home" style={{ fontSize: '18px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Home</a>
-                        <a href="#projects" style={{ fontSize: '18px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Projects</a>
-                        <a href="#certificates" style={{ fontSize: '18px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Certificates</a>
-                        <a href="#contact" style={{ fontSize: '18px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Contact</a>
+                        <a href="/" style={{ fontSize: '18px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Home</a>
+                        <a href="/projects" style={{ fontSize: '18px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Projects</a>
+                        <a href="/certificates" style={{ fontSize: '18px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Certificates</a>
+                        <a href="/contact" style={{ fontSize: '18px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Contact</a>
                     </div>
 
                     {/* Hamburger Button */}
@@ -169,10 +141,10 @@ export default function Home() {
                         gap: '15px',
                         borderTop: '1px solid #eee'
                     }}>
-                        <a href="#home" style={{ fontSize: '20px', padding: '10px', textDecoration: 'none', color: '#333' }} onClick={() => setIsMenuOpen(false)}>🏠 Home</a>
-                        <a href="#projects" style={{ fontSize: '20px', padding: '10px', textDecoration: 'none', color: '#333' }} onClick={() => setIsMenuOpen(false)}>📁 Projects</a>
-                        <a href="#certificates" style={{ fontSize: '20px', padding: '10px', textDecoration: 'none', color: '#333' }} onClick={() => setIsMenuOpen(false)}>📜 Certificates</a>
-                        <a href="#contact" style={{ fontSize: '20px', padding: '10px', textDecoration: 'none', color: '#333' }} onClick={() => setIsMenuOpen(false)}>📞 Contact</a>
+                        <a href="/" style={{ fontSize: '20px', padding: '10px', textDecoration: 'none', color: '#333' }} onClick={() => setIsMenuOpen(false)}>🏠 Home</a>
+                        <a href="/projects" style={{ fontSize: '20px', padding: '10px', textDecoration: 'none', color: '#333' }} onClick={() => setIsMenuOpen(false)}>📁 Projects</a>
+                        <a href="/certificates" style={{ fontSize: '20px', padding: '10px', textDecoration: 'none', color: '#333' }} onClick={() => setIsMenuOpen(false)}>📜 Certificates</a>
+                        <a href="/contact" style={{ fontSize: '20px', padding: '10px', textDecoration: 'none', color: '#333' }} onClick={() => setIsMenuOpen(false)}>📞 Contact</a>
                     </div>
                 )}
             </nav>
@@ -223,7 +195,7 @@ export default function Home() {
                         </p>
 
                         <div className="hero-buttons" style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-                            <a href="#contact" style={{
+                            <a href="/contact" style={{
                                 backgroundColor: '#ffd700',
                                 color: '#333',
                                 padding: '14px 30px',
@@ -238,7 +210,7 @@ export default function Home() {
                                 onMouseLeave={e => e.target.style.transform = 'scale(1)'}>
                                 📞 Hire Me Now
                             </a>
-                            <a href="#projects" style={{
+                            <a href="/projects" style={{
                                 backgroundColor: 'transparent',
                                 border: '2px solid white',
                                 color: 'white',
@@ -342,140 +314,6 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* Projects Section */}
-            <section id="projects" style={{
-                padding: '60px 20px',
-                backgroundColor: 'white'
-            }}>
-                <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-                    <h2 style={{ fontSize: '32px', textAlign: 'center', color: '#333', marginBottom: '10px' }}>My Projects</h2>
-                    <p style={{ fontSize: '16px', textAlign: 'center', color: '#666', marginBottom: '40px' }}>Here's what I've built</p>
-
-                    <div className="projects-grid" style={{
-                        backgroundColor: '#f8f9fa',
-                        borderRadius: '16px',
-                        overflow: 'hidden',
-                        boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
-                    }}>
-                        <div style={{
-                            display: 'grid',
-                            gridTemplateColumns: '1fr 1fr'
-                        }}>
-                            <div style={{ padding: '30px' }}>
-                                <span style={{
-                                    backgroundColor: '#667eea',
-                                    color: 'white',
-                                    padding: '4px 12px',
-                                    borderRadius: '20px',
-                                    fontSize: '12px',
-                                    display: 'inline-block',
-                                    marginBottom: '15px'
-                                }}>Featured</span>
-                                <h3 style={{ fontSize: '24px', color: '#333', marginBottom: '15px' }}>ISTS Educational Website</h3>
-                                <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.5', marginBottom: '20px' }}>
-                                    Complete web platform for an educational institute with event management,
-                                    user registration system, and dynamic content management.
-                                </p>
-                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '25px' }}>
-                                    {['Next.js', 'React', 'Node.js', 'MongoDB', 'Tailwind CSS'].map(tech => (
-                                        <span key={tech} style={{
-                                            backgroundColor: '#e0e7ff',
-                                            color: '#667eea',
-                                            padding: '4px 10px',
-                                            borderRadius: '15px',
-                                            fontSize: '11px'
-                                        }}>{tech}</span>
-                                    ))}
-                                </div>
-                                <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-                                    <a href="https://github.com/nehalrauf199-sudO/ists-website" target="_blank" style={{
-                                        backgroundColor: '#333',
-                                        color: 'white',
-                                        padding: '10px 20px',
-                                        borderRadius: '8px',
-                                        textDecoration: 'none',
-                                        fontSize: '14px',
-                                        display: 'inline-block'
-                                    }}>📂 View Code</a>
-                                    <a href="https://www.ists-institute.com" target="_blank" style={{
-                                        backgroundColor: '#667eea',
-                                        color: 'white',
-                                        padding: '10px 20px',
-                                        borderRadius: '8px',
-                                        textDecoration: 'none',
-                                        fontSize: '14px',
-                                        display: 'inline-block'
-                                    }}>🔗 Live Demo</a>
-                                </div>
-                            </div>
-
-                            <a
-                                href="https://www.ists-institute.com"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                style={{
-                                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    padding: '30px',
-                                    minHeight: '250px',
-                                    cursor: 'pointer',
-                                    textDecoration: 'none'
-                                }}
-                            >
-                                <div style={{ textAlign: 'center' }}>
-                                    <p style={{ fontSize: '60px', margin: 0 }}>🏫</p>
-                                    <p style={{ color: 'white', fontSize: '16px', marginTop: '15px', fontWeight: 'bold' }}>
-                                        Click to Visit Website →
-                                    </p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* CERTIFICATES SECTION - NEW */}
-            <section id="certificates" style={{
-                padding: '60px 20px',
-                backgroundColor: '#f8f9fa'
-            }}>
-                <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-                    <h2 style={{ fontSize: '32px', textAlign: 'center', color: '#333', marginBottom: '10px' }}>My Certificates</h2>
-                    <p style={{ fontSize: '16px', textAlign: 'center', color: '#666', marginBottom: '40px' }}>Certifications and achievements</p>
-
-                    <div className="certificates-grid" style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-                        gap: '25px'
-                    }}>
-                        {[
-                            { name: 'Full-Stack Web Development', issuer: 'Example Institute', date: '2025', emoji: '📜' },
-                            { name: 'React Advanced', issuer: 'Example Institute', date: '2025', emoji: '⚛️' },
-                            { name: 'JavaScript Mastery', issuer: 'Example Institute', date: '2024', emoji: '💛' },
-                        ].map((cert) => (
-                            <div key={cert.name} style={{
-                                backgroundColor: 'white',
-                                padding: '25px',
-                                borderRadius: '12px',
-                                boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
-                                textAlign: 'center',
-                                transition: 'transform 0.3s',
-                                cursor: 'pointer'
-                            }}
-                                onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-5px)'}
-                                onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}>
-                                <p style={{ fontSize: '48px', margin: 0 }}>{cert.emoji}</p>
-                                <h3 style={{ fontSize: '18px', color: '#333', margin: '12px 0 5px' }}>{cert.name}</h3>
-                                <p style={{ color: '#666', fontSize: '14px' }}>{cert.issuer}</p>
-                                <p style={{ color: '#999', fontSize: '13px' }}>{cert.date}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
             {/* Why Hire Me Section */}
             <section style={{
                 padding: '60px 20px',
@@ -513,130 +351,6 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* Contact Section */}
-            <section id="contact" style={{
-                padding: '60px 20px',
-                backgroundColor: '#667eea'
-            }}>
-                <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
-                    <h2 style={{ fontSize: '32px', color: 'white', marginBottom: '10px' }}>Get In Touch</h2>
-                    <p style={{ fontSize: '16px', color: '#f0f0f0', marginBottom: '30px' }}>
-                        Let's discuss your project! I respond within 2 hours.
-                    </p>
-
-                    <form onSubmit={handleSubmit} style={{
-                        backgroundColor: 'white',
-                        borderRadius: '16px',
-                        padding: '30px',
-                        textAlign: 'left'
-                    }}>
-                        <div style={{ marginBottom: '15px' }}>
-                            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Your Name *</label>
-                            <input
-                                type="text"
-                                name="name"
-                                placeholder="John Doe"
-                                required
-                                style={{
-                                    width: '100%',
-                                    padding: '12px',
-                                    border: '1px solid #ddd',
-                                    borderRadius: '8px',
-                                    fontSize: '14px'
-                                }}
-                            />
-                        </div>
-                        <div style={{ marginBottom: '15px' }}>
-                            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Email Address *</label>
-                            <input
-                                type="email"
-                                name="email"
-                                placeholder="you@example.com"
-                                required
-                                style={{
-                                    width: '100%',
-                                    padding: '12px',
-                                    border: '1px solid #ddd',
-                                    borderRadius: '8px',
-                                    fontSize: '14px'
-                                }}
-                            />
-                        </div>
-                        <div style={{ marginBottom: '20px' }}>
-                            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Your Message *</label>
-                            <textarea
-                                name="message"
-                                rows="3"
-                                placeholder="Tell me about your project..."
-                                required
-                                style={{
-                                    width: '100%',
-                                    padding: '12px',
-                                    border: '1px solid #ddd',
-                                    borderRadius: '8px',
-                                    fontSize: '14px'
-                                }}
-                            ></textarea>
-                        </div>
-
-                        {formStatus && (
-                            <p style={{
-                                marginBottom: '15px',
-                                padding: '10px',
-                                backgroundColor: formStatus.includes('✅') ? '#d4edda' : '#f8d7da',
-                                color: formStatus.includes('✅') ? '#155724' : '#721c24',
-                                borderRadius: '8px',
-                                fontSize: '14px',
-                                textAlign: 'center'
-                            }}>
-                                {formStatus}
-                            </p>
-                        )}
-
-                        <button
-                            type="submit"
-                            style={{
-                                backgroundColor: '#667eea',
-                                color: 'white',
-                                width: '100%',
-                                padding: '12px',
-                                border: 'none',
-                                borderRadius: '8px',
-                                fontSize: '16px',
-                                fontWeight: 'bold',
-                                cursor: 'pointer',
-                                transition: 'background 0.3s'
-                            }}
-                            onMouseEnter={e => e.target.style.background = '#764ba2'}
-                            onMouseLeave={e => e.target.style.background = '#667eea'}
-                        >
-                            ✉️ Send Message
-                        </button>
-                    </form>
-
-                    <div style={{
-                        marginTop: '30px',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        gap: '30px',
-                        flexWrap: 'wrap'
-                    }}>
-                        <div>
-                            <p style={{ color: 'white', fontSize: '12px' }}>📞 Call/WhatsApp</p>
-                            <a href="tel:923288716168" style={{ color: '#ffd700', fontSize: '18px', fontWeight: 'bold', textDecoration: 'none' }}>0328-8716168</a>
-                        </div>
-                        <div>
-                            <p style={{ color: 'white', fontSize: '12px' }}>📧 Email</p>
-                            <a href="mailto:nehalrauf199@gmail.com" style={{ color: '#ffd700', fontSize: '18px', fontWeight: 'bold', textDecoration: 'none' }}>nehalrauf199@gmail.com</a>
-                        </div>
-                        <div>
-                            <p style={{ color: 'white', fontSize: '12px' }}>🔗 LinkedIn</p>
-                            <a href="https://www.linkedin.com/in/nehall-rauf" target="_blank" style={{ color: '#ffd700', fontSize: '18px', fontWeight: 'bold', textDecoration: 'none' }}>Connect</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
             {/* Footer */}
             <footer style={{
                 backgroundColor: '#333',
@@ -649,7 +363,7 @@ export default function Home() {
                 <div style={{ marginTop: '8px' }}>
                     <a href="https://github.com/nehalrauf199-sudO" target="_blank" style={{ color: '#999', margin: '0 8px', textDecoration: 'none' }}>GitHub</a>
                     <a href="https://www.linkedin.com/in/nehall-rauf" target="_blank" style={{ color: '#999', margin: '0 8px', textDecoration: 'none' }}>LinkedIn</a>
-                    <a href="#home" style={{ color: '#999', margin: '0 8px', textDecoration: 'none' }}>Back to Top ↑</a>
+                    <a href="/" style={{ color: '#999', margin: '0 8px', textDecoration: 'none' }}>Back to Top ↑</a>
                 </div>
             </footer>
         </div>
