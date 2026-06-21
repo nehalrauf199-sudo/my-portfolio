@@ -1,5 +1,4 @@
 import Navbar from './Navbar';
-import Link from 'next/link';
 
 export default function Layout({ children }) {
     return (
@@ -16,9 +15,9 @@ export default function Layout({ children }) {
             }}>
                 <p>© 2026 Nehal Rauf. Available for hire immediately.</p>
                 <div style={{ marginTop: '8px' }}>
-                    <Link href="https://github.com/nehalrauf199-sudO" target="_blank" style={{ color: '#999', margin: '0 8px', textDecoration: 'none' }}>GitHub</Link>
-                    <Link href="https://www.linkedin.com/in/nehall-rauf" target="_blank" style={{ color: '#999', margin: '0 8px', textDecoration: 'none' }}>LinkedIn</Link>
-                    <Link href="/" style={{ color: '#999', margin: '0 8px', textDecoration: 'none' }}>Back to Top ↑</Link>
+                    <a href="https://github.com/nehalrauf199-sudO" target="_blank" style={{ color: '#999', margin: '0 8px', textDecoration: 'none' }}>GitHub</a>
+                    <a href="https://www.linkedin.com/in/nehall-rauf" target="_blank" style={{ color: '#999', margin: '0 8px', textDecoration: 'none' }}>LinkedIn</a>
+                    <a href="/" style={{ color: '#999', margin: '0 8px', textDecoration: 'none' }}>Back to Top ↑</a>
                 </div>
             </footer>
         </div>

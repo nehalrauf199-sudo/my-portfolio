@@ -1,10 +1,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 
 export default function Navbar() {
     const router = useRouter();
-    const [isOpen, setIsOpen] = useState(false);
 
     const navItems = [
         { name: 'Home', path: '/' },
@@ -35,7 +33,6 @@ export default function Navbar() {
                     Nehal Rauf
                 </Link>
 
-                {/* Desktop Menu */}
                 <div style={{ display: 'flex', gap: '30px' }}>
                     {navItems.map((item) => (
                         <Link key={item.path} href={item.path} style={{
@@ -50,40 +47,7 @@ export default function Navbar() {
                         </Link>
                     ))}
                 </div>
-
-                {/* Hamburger Menu for Mobile */}
-                <button onClick={() => setIsOpen(!isOpen)} style={{
-                    display: 'none',
-                    background: 'none',
-                    border: 'none',
-                    fontSize: '28px',
-                    cursor: 'pointer',
-                }}>
-                    ☰
-                </button>
             </div>
-
-            {/* Mobile Menu */}
-            {isOpen && (
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '15px',
-                    padding: '20px',
-                    backgroundColor: 'white',
-                    borderTop: '1px solid #eee',
-                }}>
-                    {navItems.map((item) => (
-                        <Link key={item.path} href={item.path} style={{
-                            fontSize: '18px',
-                            color: router.pathname === item.path ? '#667eea' : '#333',
-                            textDecoration: 'none',
-                        }} onClick={() => setIsOpen(false)}>
-                            {item.name}
-                        </Link>
-                    ))}
-                </div>
-            )}
         </nav>
     );
 }
