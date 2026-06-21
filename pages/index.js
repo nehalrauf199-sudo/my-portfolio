@@ -1,8 +1,35 @@
-import { useState, useEffect } from 'react';
-import Head from 'next/head';
+import Head from 'next/head'
+import { useState, useEffect } from 'react'
 
 export default function Home() {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const [scrolled, setScrolled] = useState(false)
+    const [formStatus, setFormStatus] = useState('')
+
+    useEffect(() => {
+        const handleScroll = () => setScrolled(window.scrollY > 50)
+        window.addEventListener('scroll', handleScroll)
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [])
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        const name = e.target.name.value
+        const email = e.target.email.value
+        const message = e.target.message.value
+
+        if (!name || !email || !message) {
+            setFormStatus('❌ Please fill all fields')
+            return
+        }
+
+        const subject = `Portfolio Contact from ${name}`
+        const body = `Name: ${name}%0A%0AEmail: ${email}%0A%0AMessage:%0A${message}`
+        window.location.href = `mailto:nehalrauf199@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`
+
+        setFormStatus('✅ Opening your email app...')
+        setTimeout(() => setFormStatus(''), 3000)
+    }
 
     return (
         <div style={{ fontFamily: 'Arial, sans-serif' }}>
@@ -12,142 +39,276 @@ export default function Home() {
                 <meta name="description" content="Hire Nehal Rauf - Professional Full-Stack Developer" />
             </Head>
 
-            {/* Navigation with Hamburger */}
+            <style jsx global>{`
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { overflow-x: hidden; }
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-20px); }
+        }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        
+        @media (max-width: 768px) {
+          .desktop-menu { display: none !important; }
+          .hamburger-btn { display: block !important; }
+          .hero-grid { 
+            grid-template-columns: 1fr !important; 
+            text-align: center !important;
+            gap: 30px !important;
+          }
+          .hero-title { font-size: 36px !important; }
+          .hero-subtitle { font-size: 16px !important; }
+          .hero-buttons { 
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 15px !important;
+            align-items: center !important;
+          }
+          .hero-buttons a {
+            width: 80% !important;
+            text-align: center !important;
+          }
+          .stats-container {
+            display: flex !important;
+            flex-direction: row !important;
+            justify-content: space-around !important;
+            flex-wrap: nowrap !important;
+            gap: 10px !important;
+            margin-top: 30px !important;
+          }
+          .profile-image-container {
+            width: 200px !important;
+            height: 200px !important;
+          }
+          .skills-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 12px !important;
+          }
+          .projects-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .projects-grid > div {
+            flex-direction: column !important;
+          }
+          .features-grid {
+            grid-template-columns: 1fr !important;
+            gap: 15px !important;
+          }
+          .nav-links {
+            gap: 15px !important;
+          }
+          .nav-links a {
+            font-size: 14px !important;
+          }
+          .certificates-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
+
+            {/* Navigation */}
             <nav style={{
                 position: 'fixed',
                 top: 0,
                 width: '100%',
-                backgroundColor: '#667eea',
-                padding: '15px 20px',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                zIndex: 1000,
-                boxShadow: '0 2px 10px rgba(0,0,0,0.2)',
+                backgroundColor: scrolled ? 'white' : '#667eea',
+                boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.1)' : 'none',
+                transition: 'all 0.3s ease',
+                zIndex: 1000
             }}>
-                <h1 style={{ color: 'white', margin: 0, fontSize: '22px' }}>Nehal Rauf</h1>
+                <div style={{
+                    maxWidth: '1200px',
+                    margin: '0 auto',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    padding: '20px'
+                }}>
+                    <h1 style={{
+                        fontSize: '28px',
+                        fontWeight: 'bold',
+                        color: scrolled ? '#333' : 'white',
+                        margin: 0,
+                        cursor: 'pointer'
+                    }}>
+                        Nehal Rauf
+                    </h1>
 
-                {/* Desktop Menu */}
-                <div style={{ display: 'flex', gap: '10px' }}>
-                    <a href="#home" style={{ color: 'white', textDecoration: 'none', padding: '8px 15px', borderRadius: '20px' }}>Home</a>
-                    <a href="#projects" style={{ color: 'white', textDecoration: 'none', padding: '8px 15px', borderRadius: '20px' }}>Projects</a>
-                    <a href="#certificates" style={{ color: 'white', textDecoration: 'none', padding: '8px 15px', borderRadius: '20px' }}>Certificates</a>
-                    <a href="#contact" style={{ color: 'white', textDecoration: 'none', padding: '8px 15px', borderRadius: '20px' }}>Contact</a>
+                    {/* Desktop Menu */}
+                    <div className="desktop-menu" style={{ display: 'flex', gap: '30px' }}>
+                        <a href="#home" style={{ fontSize: '18px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Home</a>
+                        <a href="#projects" style={{ fontSize: '18px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Projects</a>
+                        <a href="#certificates" style={{ fontSize: '18px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Certificates</a>
+                        <a href="#contact" style={{ fontSize: '18px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Contact</a>
+                    </div>
+
+                    {/* Hamburger Button */}
+                    <button
+                        className="hamburger-btn"
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        style={{
+                            display: 'none',
+                            background: 'none',
+                            border: 'none',
+                            fontSize: '30px',
+                            cursor: 'pointer',
+                            color: scrolled ? '#333' : 'white'
+                        }}
+                    >
+                        ☰
+                    </button>
                 </div>
 
-                {/* Hamburger Button */}
-                <button
-                    onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    style={{
-                        display: 'none',
-                        background: 'none',
-                        border: 'none',
-                        color: 'white',
-                        fontSize: '28px',
-                        cursor: 'pointer',
-                    }}
-                >
-                    ☰
-                </button>
+                {/* Mobile Menu */}
+                {isMenuOpen && (
+                    <div style={{
+                        backgroundColor: 'white',
+                        padding: '20px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '15px',
+                        borderTop: '1px solid #eee'
+                    }}>
+                        <a href="#home" style={{ fontSize: '20px', padding: '10px', textDecoration: 'none', color: '#333' }} onClick={() => setIsMenuOpen(false)}>🏠 Home</a>
+                        <a href="#projects" style={{ fontSize: '20px', padding: '10px', textDecoration: 'none', color: '#333' }} onClick={() => setIsMenuOpen(false)}>📁 Projects</a>
+                        <a href="#certificates" style={{ fontSize: '20px', padding: '10px', textDecoration: 'none', color: '#333' }} onClick={() => setIsMenuOpen(false)}>📜 Certificates</a>
+                        <a href="#contact" style={{ fontSize: '20px', padding: '10px', textDecoration: 'none', color: '#333' }} onClick={() => setIsMenuOpen(false)}>📞 Contact</a>
+                    </div>
+                )}
             </nav>
 
-            {/* Mobile Menu */}
-            {isMenuOpen && (
-                <div style={{
-                    position: 'fixed',
-                    top: '60px',
-                    left: 0,
-                    right: 0,
-                    backgroundColor: '#667eea',
-                    padding: '20px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '15px',
-                    zIndex: 999,
-                    boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
-                }}>
-                    <a href="#home" style={{ color: 'white', textDecoration: 'none', fontSize: '18px', padding: '10px' }} onClick={() => setIsMenuOpen(false)}>🏠 Home</a>
-                    <a href="#projects" style={{ color: 'white', textDecoration: 'none', fontSize: '18px', padding: '10px' }} onClick={() => setIsMenuOpen(false)}>📁 Projects</a>
-                    <a href="#certificates" style={{ color: 'white', textDecoration: 'none', fontSize: '18px', padding: '10px' }} onClick={() => setIsMenuOpen(false)}>📜 Certificates</a>
-                    <a href="#contact" style={{ color: 'white', textDecoration: 'none', fontSize: '18px', padding: '10px' }} onClick={() => setIsMenuOpen(false)}>📞 Contact</a>
-                </div>
-            )}
-
-            {/* HOME SECTION */}
+            {/* Hero Section */}
             <section id="home" style={{
                 minHeight: '100vh',
                 background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                padding: '80px 20px 40px',
-                textAlign: 'center',
-                color: 'white',
+                padding: '100px 20px 60px'
             }}>
-                <div>
-                    {/* Profile Photo */}
-                    <div style={{
-                        width: '150px',
-                        height: '150px',
-                        borderRadius: '50%',
-                        overflow: 'hidden',
-                        margin: '0 auto 25px',
-                        border: '4px solid #ffd700',
-                        boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
-                    }}>
-                        <img
-                            src="/neha pro.jpeg"
-                            alt="Nehal Rauf"
-                            style={{
+                <div className="hero-grid" style={{
+                    maxWidth: '1200px',
+                    margin: '0 auto',
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 1fr',
+                    gap: '50px',
+                    alignItems: 'center'
+                }}>
+                    <div>
+                        <h1 className="hero-title" style={{
+                            fontSize: '48px',
+                            fontWeight: 'bold',
+                            color: 'white',
+                            marginBottom: '15px',
+                            lineHeight: '1.2'
+                        }}>
+                            I'm <span style={{ color: '#ffd700' }}>Nehal Rauf</span>
+                            <span style={{
+                                display: 'block',
+                                color: '#ffd700',
+                                fontSize: '32px',
+                                marginTop: '10px'
+                            }}>
+                                Full-Stack Developer
+                            </span>
+                        </h1>
+                        <p className="hero-subtitle" style={{
+                            fontSize: '18px',
+                            color: '#f0f0f0',
+                            lineHeight: '1.5',
+                            marginBottom: '25px'
+                        }}>
+                            Computer Science undergraduate with 3.84 GPA. I build fast, responsive websites
+                            that get results. Available for freelance and full-time opportunities.
+                        </p>
+
+                        <div className="hero-buttons" style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
+                            <a href="#contact" style={{
+                                backgroundColor: '#ffd700',
+                                color: '#333',
+                                padding: '14px 30px',
+                                fontSize: '18px',
+                                fontWeight: 'bold',
+                                borderRadius: '50px',
+                                textDecoration: 'none',
+                                display: 'inline-block',
+                                transition: 'transform 0.3s'
+                            }}
+                                onMouseEnter={e => e.target.style.transform = 'scale(1.05)'}
+                                onMouseLeave={e => e.target.style.transform = 'scale(1)'}>
+                                📞 Hire Me Now
+                            </a>
+                            <a href="#projects" style={{
+                                backgroundColor: 'transparent',
+                                border: '2px solid white',
+                                color: 'white',
+                                padding: '14px 30px',
+                                fontSize: '18px',
+                                fontWeight: 'bold',
+                                borderRadius: '50px',
+                                textDecoration: 'none',
+                                display: 'inline-block'
+                            }}>
+                                View Work →
+                            </a>
+                        </div>
+
+                        <div className="stats-container" style={{
+                            display: 'flex',
+                            gap: '30px',
+                            marginTop: '40px',
+                            justifyContent: 'flex-start'
+                        }}>
+                            <div style={{ textAlign: 'center' }}>
+                                <p style={{ fontSize: '28px', fontWeight: 'bold', color: '#ffd700', margin: 0 }}>3+</p>
+                                <p style={{ color: 'white', margin: 0, fontSize: '14px' }}>Years</p>
+                            </div>
+                            <div style={{ textAlign: 'center' }}>
+                                <p style={{ fontSize: '28px', fontWeight: 'bold', color: '#ffd700', margin: 0 }}>10+</p>
+                                <p style={{ color: 'white', margin: 0, fontSize: '14px' }}>Projects</p>
+                            </div>
+                            <div style={{ textAlign: 'center' }}>
+                                <p style={{ fontSize: '28px', fontWeight: 'bold', color: '#ffd700', margin: 0 }}>24/7</p>
+                                <p style={{ color: 'white', margin: 0, fontSize: '14px' }}>Support</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style={{ textAlign: 'center' }}>
+                        <div className="profile-image-container animate-float" style={{
+                            width: '300px',
+                            height: '300px',
+                            margin: '0 auto',
+                            borderRadius: '50%',
+                            background: 'linear-gradient(135deg, #ffd700 0%, #ff9800 100%)',
+                            padding: '8px'
+                        }}>
+                            <div style={{
                                 width: '100%',
                                 height: '100%',
-                                objectFit: 'cover',
-                            }}
-                        />
-                    </div>
-                    <h1 style={{ fontSize: '48px', marginBottom: '10px' }}>
-                        I'm <span style={{ color: '#ffd700' }}>Nehal Rauf</span>
-                    </h1>
-                    <h2 style={{ fontSize: '28px', color: '#ffd700', marginBottom: '15px' }}>
-                        Full-Stack Developer
-                    </h2>
-                    <p style={{ fontSize: '18px', maxWidth: '600px', margin: '0 auto 25px', color: '#f0f0f0' }}>
-                        Computer Science undergraduate with 3.84 GPA. I build fast, responsive websites.
-                    </p>
-                    <a href="#contact" style={{
-                        backgroundColor: '#ffd700',
-                        color: '#333',
-                        padding: '14px 40px',
-                        borderRadius: '50px',
-                        textDecoration: 'none',
-                        fontSize: '18px',
-                        fontWeight: 'bold',
-                        display: 'inline-block',
-                    }}>
-                        📞 Hire Me Now
-                    </a>
-                </div>
-            </section>
-
-            {/* About Section */}
-            <section style={{
-                padding: '60px 20px',
-                backgroundColor: '#f8fafc',
-                textAlign: 'center',
-            }}>
-                <h2 style={{ fontSize: '32px', color: '#1e293b', marginBottom: '40px' }}>About Me</h2>
-                <div style={{ display: 'flex', justifyContent: 'center', gap: '30px', flexWrap: 'wrap' }}>
-                    <div style={{ backgroundColor: 'white', padding: '25px', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', minWidth: '120px' }}>
-                        <h3 style={{ fontSize: '32px', color: '#667eea', margin: 0 }}>3+</h3>
-                        <p style={{ color: '#475569', margin: '5px 0 0' }}>Years</p>
-                    </div>
-                    <div style={{ backgroundColor: 'white', padding: '25px', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', minWidth: '120px' }}>
-                        <h3 style={{ fontSize: '32px', color: '#667eea', margin: 0 }}>10+</h3>
-                        <p style={{ color: '#475569', margin: '5px 0 0' }}>Projects</p>
-                    </div>
-                    <div style={{ backgroundColor: 'white', padding: '25px', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', minWidth: '120px' }}>
-                        <h3 style={{ fontSize: '32px', color: '#667eea', margin: 0 }}>24/7</h3>
-                        <p style={{ color: '#475569', margin: '5px 0 0' }}>Support</p>
+                                borderRadius: '50%',
+                                backgroundColor: '#f0f0f0',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                overflow: 'hidden'
+                            }}>
+                                <img
+                                    src="/neha pro.jpeg"
+                                    alt="Nehal Rauf"
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        objectFit: 'cover'
+                                    }}
+                                />
+                            </div>
+                        </div>
+                        <div style={{ marginTop: '15px' }}>
+                            <a href="https://github.com/nehalrauf199-sudO" target="_blank" style={{ color: 'white', margin: '0 10px', fontSize: '20px', textDecoration: 'none' }}>📌 GitHub</a>
+                            <a href="https://www.linkedin.com/in/nehall-rauf" target="_blank" style={{ color: 'white', margin: '0 10px', fontSize: '20px', textDecoration: 'none' }}>🔗 LinkedIn</a>
+                            <a href="mailto:nehalrauf199@gmail.com" style={{ color: 'white', margin: '0 10px', fontSize: '20px', textDecoration: 'none' }}>✉️ Email</a>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -155,137 +316,322 @@ export default function Home() {
             {/* Skills Section */}
             <section style={{
                 padding: '60px 20px',
-                backgroundColor: 'white',
-                textAlign: 'center',
+                backgroundColor: '#f8f9fa'
             }}>
-                <h2 style={{ fontSize: '32px', color: '#1e293b', marginBottom: '40px' }}>Technical Skills</h2>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '15px', maxWidth: '900px', margin: '0 auto' }}>
-                    {['Next.js', 'React', 'Node.js', 'MongoDB', 'Tailwind CSS', 'JavaScript', 'Python', 'HTML/CSS'].map((skill) => (
-                        <div key={skill} style={{
-                            backgroundColor: '#f1f5f9',
-                            padding: '15px',
-                            borderRadius: '10px',
-                            fontWeight: '600',
-                            color: '#334155',
-                        }}>
-                            ⚡ {skill}
-                        </div>
-                    ))}
-                </div>
-            </section>
+                <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
+                    <h2 style={{ fontSize: '32px', color: '#333', marginBottom: '10px' }}>Technical Skills</h2>
+                    <p style={{ fontSize: '16px', color: '#666', marginBottom: '40px' }}>Technologies I master</p>
 
-            {/* PROJECTS SECTION */}
-            <section id="projects" style={{
-                padding: '60px 20px',
-                backgroundColor: '#f8fafc',
-            }}>
-                <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-                    <h2 style={{ fontSize: '32px', textAlign: 'center', color: '#1e293b' }}>My Projects</h2>
-                    <p style={{ textAlign: 'center', color: '#64748b', marginBottom: '40px' }}>Here's what I've built</p>
-
-                    <div style={{
-                        backgroundColor: 'white',
-                        borderRadius: '16px',
-                        padding: '30px',
-                        boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
+                    <div className="skills-grid" style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))',
+                        gap: '15px'
                     }}>
-                        <h3 style={{ fontSize: '24px', color: '#1e293b' }}>ISTS Educational Website</h3>
-                        <p style={{ color: '#64748b', marginBottom: '15px' }}>
-                            Complete web platform for an educational institute with event management, user registration, and dynamic content.
-                        </p>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
-                            {['Next.js', 'React', 'Node.js', 'MongoDB', 'Tailwind CSS'].map((tech) => (
-                                <span key={tech} style={{ backgroundColor: '#e2e8f0', color: '#475569', padding: '4px 12px', borderRadius: '15px', fontSize: '13px' }}>{tech}</span>
-                            ))}
-                        </div>
-                        <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-                            <a href="https://github.com/nehalrauf199-sudO/ists-website" target="_blank" style={{ backgroundColor: '#1e293b', color: 'white', padding: '10px 20px', borderRadius: '8px', textDecoration: 'none' }}>📂 View Code</a>
-                            <a href="https://www.ists-institute.com" target="_blank" style={{ backgroundColor: '#667eea', color: 'white', padding: '10px 20px', borderRadius: '8px', textDecoration: 'none' }}>🔗 Live Demo</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* CERTIFICATES SECTION */}
-            <section id="certificates" style={{
-                padding: '60px 20px',
-                backgroundColor: 'white',
-            }}>
-                <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-                    <h2 style={{ fontSize: '32px', textAlign: 'center', color: '#1e293b' }}>My Certificates</h2>
-                    <p style={{ textAlign: 'center', color: '#64748b', marginBottom: '40px' }}>Certifications and achievements</p>
-
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
-                        {[
-                            { name: 'Full-Stack Web Development', issuer: 'Example Institute', date: '2025', emoji: '📜' },
-                            { name: 'React Advanced', issuer: 'Example Institute', date: '2025', emoji: '⚛️' },
-                        ].map((cert) => (
-                            <div key={cert.name} style={{
-                                backgroundColor: '#f8fafc',
-                                padding: '25px',
-                                borderRadius: '16px',
-                                textAlign: 'center',
-                                border: '1px solid #e2e8f0',
+                        {['Next.js', 'React', 'Node.js', 'MongoDB', 'Tailwind CSS', 'JavaScript', 'Python', 'HTML/CSS'].map(skill => (
+                            <div key={skill} style={{
+                                backgroundColor: 'white',
+                                padding: '15px',
+                                borderRadius: '10px',
+                                boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
                             }}>
-                                <div style={{ fontSize: '48px' }}>{cert.emoji}</div>
-                                <h3 style={{ fontSize: '18px', color: '#1e293b', margin: '10px 0 5px' }}>{cert.name}</h3>
-                                <p style={{ color: '#64748b' }}>{cert.issuer}</p>
-                                <p style={{ color: '#94a3b8', fontSize: '14px' }}>{cert.date}</p>
+                                <p style={{ fontSize: '30px', margin: '0' }}>⚡</p>
+                                <h3 style={{ fontSize: '14px', margin: '8px 0' }}>{skill}</h3>
                             </div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* CONTACT SECTION */}
+            {/* Projects Section */}
+            <section id="projects" style={{
+                padding: '60px 20px',
+                backgroundColor: 'white'
+            }}>
+                <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+                    <h2 style={{ fontSize: '32px', textAlign: 'center', color: '#333', marginBottom: '10px' }}>My Projects</h2>
+                    <p style={{ fontSize: '16px', textAlign: 'center', color: '#666', marginBottom: '40px' }}>Here's what I've built</p>
+
+                    <div className="projects-grid" style={{
+                        backgroundColor: '#f8f9fa',
+                        borderRadius: '16px',
+                        overflow: 'hidden',
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+                    }}>
+                        <div style={{
+                            display: 'grid',
+                            gridTemplateColumns: '1fr 1fr'
+                        }}>
+                            <div style={{ padding: '30px' }}>
+                                <span style={{
+                                    backgroundColor: '#667eea',
+                                    color: 'white',
+                                    padding: '4px 12px',
+                                    borderRadius: '20px',
+                                    fontSize: '12px',
+                                    display: 'inline-block',
+                                    marginBottom: '15px'
+                                }}>Featured</span>
+                                <h3 style={{ fontSize: '24px', color: '#333', marginBottom: '15px' }}>ISTS Educational Website</h3>
+                                <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.5', marginBottom: '20px' }}>
+                                    Complete web platform for an educational institute with event management,
+                                    user registration system, and dynamic content management.
+                                </p>
+                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '25px' }}>
+                                    {['Next.js', 'React', 'Node.js', 'MongoDB', 'Tailwind CSS'].map(tech => (
+                                        <span key={tech} style={{
+                                            backgroundColor: '#e0e7ff',
+                                            color: '#667eea',
+                                            padding: '4px 10px',
+                                            borderRadius: '15px',
+                                            fontSize: '11px'
+                                        }}>{tech}</span>
+                                    ))}
+                                </div>
+                                <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
+                                    <a href="https://github.com/nehalrauf199-sudO/ists-website" target="_blank" style={{
+                                        backgroundColor: '#333',
+                                        color: 'white',
+                                        padding: '10px 20px',
+                                        borderRadius: '8px',
+                                        textDecoration: 'none',
+                                        fontSize: '14px',
+                                        display: 'inline-block'
+                                    }}>📂 View Code</a>
+                                    <a href="https://www.ists-institute.com" target="_blank" style={{
+                                        backgroundColor: '#667eea',
+                                        color: 'white',
+                                        padding: '10px 20px',
+                                        borderRadius: '8px',
+                                        textDecoration: 'none',
+                                        fontSize: '14px',
+                                        display: 'inline-block'
+                                    }}>🔗 Live Demo</a>
+                                </div>
+                            </div>
+
+                            <a
+                                href="https://www.ists-institute.com"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{
+                                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    padding: '30px',
+                                    minHeight: '250px',
+                                    cursor: 'pointer',
+                                    textDecoration: 'none'
+                                }}
+                            >
+                                <div style={{ textAlign: 'center' }}>
+                                    <p style={{ fontSize: '60px', margin: 0 }}>🏫</p>
+                                    <p style={{ color: 'white', fontSize: '16px', marginTop: '15px', fontWeight: 'bold' }}>
+                                        Click to Visit Website →
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* CERTIFICATES SECTION - NEW */}
+            <section id="certificates" style={{
+                padding: '60px 20px',
+                backgroundColor: '#f8f9fa'
+            }}>
+                <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+                    <h2 style={{ fontSize: '32px', textAlign: 'center', color: '#333', marginBottom: '10px' }}>My Certificates</h2>
+                    <p style={{ fontSize: '16px', textAlign: 'center', color: '#666', marginBottom: '40px' }}>Certifications and achievements</p>
+
+                    <div className="certificates-grid" style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                        gap: '25px'
+                    }}>
+                        {[
+                            { name: 'Full-Stack Web Development', issuer: 'Example Institute', date: '2025', emoji: '📜' },
+                            { name: 'React Advanced', issuer: 'Example Institute', date: '2025', emoji: '⚛️' },
+                            { name: 'JavaScript Mastery', issuer: 'Example Institute', date: '2024', emoji: '💛' },
+                        ].map((cert) => (
+                            <div key={cert.name} style={{
+                                backgroundColor: 'white',
+                                padding: '25px',
+                                borderRadius: '12px',
+                                boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+                                textAlign: 'center',
+                                transition: 'transform 0.3s',
+                                cursor: 'pointer'
+                            }}
+                                onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-5px)'}
+                                onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}>
+                                <p style={{ fontSize: '48px', margin: 0 }}>{cert.emoji}</p>
+                                <h3 style={{ fontSize: '18px', color: '#333', margin: '12px 0 5px' }}>{cert.name}</h3>
+                                <p style={{ color: '#666', fontSize: '14px' }}>{cert.issuer}</p>
+                                <p style={{ color: '#999', fontSize: '13px' }}>{cert.date}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Why Hire Me Section */}
+            <section style={{
+                padding: '60px 20px',
+                backgroundColor: 'white'
+            }}>
+                <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
+                    <h2 style={{ fontSize: '32px', color: '#333', marginBottom: '10px' }}>Why Hire Me?</h2>
+                    <p style={{ fontSize: '16px', color: '#666', marginBottom: '40px' }}>What makes me different</p>
+
+                    <div className="features-grid" style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                        gap: '20px'
+                    }}>
+                        {[
+                            { icon: '⚡', title: 'Fast Delivery', desc: 'I deliver projects before deadlines' },
+                            { icon: '📱', title: 'Mobile First', desc: 'Websites that work perfectly on phones' },
+                            { icon: '🎨', title: 'Modern Design', desc: 'Beautiful, professional layouts' },
+                            { icon: '🔧', title: '24/7 Support', desc: 'Always available for fixes' },
+                            { icon: '💰', title: 'Affordable', desc: 'Quality work at fair prices' },
+                            { icon: '📈', title: 'SEO Optimized', desc: 'Your site will rank on Google' }
+                        ].map(feature => (
+                            <div key={feature.title} style={{
+                                backgroundColor: '#f8f9fa',
+                                padding: '20px',
+                                borderRadius: '12px',
+                                boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
+                            }}>
+                                <p style={{ fontSize: '36px', margin: 0 }}>{feature.icon}</p>
+                                <h3 style={{ fontSize: '18px', margin: '12px 0' }}>{feature.title}</h3>
+                                <p style={{ color: '#666', fontSize: '13px' }}>{feature.desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Contact Section */}
             <section id="contact" style={{
                 padding: '60px 20px',
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                backgroundColor: '#667eea'
             }}>
-                <div style={{ maxWidth: '500px', margin: '0 auto', textAlign: 'center' }}>
-                    <div style={{
+                <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
+                    <h2 style={{ fontSize: '32px', color: 'white', marginBottom: '10px' }}>Get In Touch</h2>
+                    <p style={{ fontSize: '16px', color: '#f0f0f0', marginBottom: '30px' }}>
+                        Let's discuss your project! I respond within 2 hours.
+                    </p>
+
+                    <form onSubmit={handleSubmit} style={{
                         backgroundColor: 'white',
-                        borderRadius: '20px',
-                        padding: '40px',
+                        borderRadius: '16px',
+                        padding: '30px',
+                        textAlign: 'left'
                     }}>
-                        <h2 style={{ fontSize: '28px', color: '#1e293b', marginBottom: '10px' }}>Get In Touch</h2>
-                        <p style={{ color: '#64748b', marginBottom: '25px' }}>Let's discuss your project!</p>
+                        <div style={{ marginBottom: '15px' }}>
+                            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Your Name *</label>
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder="John Doe"
+                                required
+                                style={{
+                                    width: '100%',
+                                    padding: '12px',
+                                    border: '1px solid #ddd',
+                                    borderRadius: '8px',
+                                    fontSize: '14px'
+                                }}
+                            />
+                        </div>
+                        <div style={{ marginBottom: '15px' }}>
+                            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Email Address *</label>
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="you@example.com"
+                                required
+                                style={{
+                                    width: '100%',
+                                    padding: '12px',
+                                    border: '1px solid #ddd',
+                                    borderRadius: '8px',
+                                    fontSize: '14px'
+                                }}
+                            />
+                        </div>
+                        <div style={{ marginBottom: '20px' }}>
+                            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Your Message *</label>
+                            <textarea
+                                name="message"
+                                rows="3"
+                                placeholder="Tell me about your project..."
+                                required
+                                style={{
+                                    width: '100%',
+                                    padding: '12px',
+                                    border: '1px solid #ddd',
+                                    borderRadius: '8px',
+                                    fontSize: '14px'
+                                }}
+                            ></textarea>
+                        </div>
 
-                        <a href="https://wa.me/923288716168?text=Hi%20Nehal,%20I%20saw%20your%20portfolio" target="_blank" style={{
-                            backgroundColor: '#25D366',
-                            color: 'white',
-                            padding: '14px 30px',
-                            borderRadius: '50px',
-                            textDecoration: 'none',
-                            fontSize: '18px',
-                            fontWeight: 'bold',
-                            display: 'inline-block',
-                            marginBottom: '25px',
-                            boxShadow: '0 4px 15px rgba(37, 211, 102, 0.4)',
-                        }}>
-                            💬 Message Me on WhatsApp
-                        </a>
+                        {formStatus && (
+                            <p style={{
+                                marginBottom: '15px',
+                                padding: '10px',
+                                backgroundColor: formStatus.includes('✅') ? '#d4edda' : '#f8d7da',
+                                color: formStatus.includes('✅') ? '#155724' : '#721c24',
+                                borderRadius: '8px',
+                                fontSize: '14px',
+                                textAlign: 'center'
+                            }}>
+                                {formStatus}
+                            </p>
+                        )}
 
-                        <div style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            gap: '20px',
-                            flexWrap: 'wrap',
-                            borderTop: '1px solid #e2e8f0',
-                            paddingTop: '20px',
-                        }}>
-                            <div>
-                                <p style={{ color: '#94a3b8', fontSize: '12px', margin: 0 }}>📞 Call</p>
-                                <a href="tel:923288716168" style={{ color: '#667eea', fontSize: '16px', fontWeight: 'bold', textDecoration: 'none' }}>0328-8716168</a>
-                            </div>
-                            <div>
-                                <p style={{ color: '#94a3b8', fontSize: '12px', margin: 0 }}>📧 Email</p>
-                                <a href="mailto:nehalrauf199@gmail.com" style={{ color: '#667eea', fontSize: '16px', fontWeight: 'bold', textDecoration: 'none' }}>nehalrauf199@gmail.com</a>
-                            </div>
-                            <div>
-                                <p style={{ color: '#94a3b8', fontSize: '12px', margin: 0 }}>🔗 LinkedIn</p>
-                                <a href="https://www.linkedin.com/in/nehall-rauf" target="_blank" style={{ color: '#667eea', fontSize: '16px', fontWeight: 'bold', textDecoration: 'none' }}>Connect</a>
-                            </div>
+                        <button
+                            type="submit"
+                            style={{
+                                backgroundColor: '#667eea',
+                                color: 'white',
+                                width: '100%',
+                                padding: '12px',
+                                border: 'none',
+                                borderRadius: '8px',
+                                fontSize: '16px',
+                                fontWeight: 'bold',
+                                cursor: 'pointer',
+                                transition: 'background 0.3s'
+                            }}
+                            onMouseEnter={e => e.target.style.background = '#764ba2'}
+                            onMouseLeave={e => e.target.style.background = '#667eea'}
+                        >
+                            ✉️ Send Message
+                        </button>
+                    </form>
+
+                    <div style={{
+                        marginTop: '30px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        gap: '30px',
+                        flexWrap: 'wrap'
+                    }}>
+                        <div>
+                            <p style={{ color: 'white', fontSize: '12px' }}>📞 Call/WhatsApp</p>
+                            <a href="tel:923288716168" style={{ color: '#ffd700', fontSize: '18px', fontWeight: 'bold', textDecoration: 'none' }}>0328-8716168</a>
+                        </div>
+                        <div>
+                            <p style={{ color: 'white', fontSize: '12px' }}>📧 Email</p>
+                            <a href="mailto:nehalrauf199@gmail.com" style={{ color: '#ffd700', fontSize: '18px', fontWeight: 'bold', textDecoration: 'none' }}>nehalrauf199@gmail.com</a>
+                        </div>
+                        <div>
+                            <p style={{ color: 'white', fontSize: '12px' }}>🔗 LinkedIn</p>
+                            <a href="https://www.linkedin.com/in/nehall-rauf" target="_blank" style={{ color: '#ffd700', fontSize: '18px', fontWeight: 'bold', textDecoration: 'none' }}>Connect</a>
                         </div>
                     </div>
                 </div>
@@ -293,43 +639,19 @@ export default function Home() {
 
             {/* Footer */}
             <footer style={{
-                backgroundColor: '#1e293b',
-                color: '#94a3b8',
+                backgroundColor: '#333',
+                color: '#999',
                 textAlign: 'center',
                 padding: '20px',
-                fontSize: '14px',
+                fontSize: '12px'
             }}>
                 <p>© 2026 Nehal Rauf. Available for hire immediately.</p>
+                <div style={{ marginTop: '8px' }}>
+                    <a href="https://github.com/nehalrauf199-sudO" target="_blank" style={{ color: '#999', margin: '0 8px', textDecoration: 'none' }}>GitHub</a>
+                    <a href="https://www.linkedin.com/in/nehall-rauf" target="_blank" style={{ color: '#999', margin: '0 8px', textDecoration: 'none' }}>LinkedIn</a>
+                    <a href="#home" style={{ color: '#999', margin: '0 8px', textDecoration: 'none' }}>Back to Top ↑</a>
+                </div>
             </footer>
-
-            {/* Mobile Responsive Styles */}
-            <style jsx>{`
-        @media (max-width: 768px) {
-          nav > div:last-child {
-            display: none !important;
-          }
-          nav > button {
-            display: block !important;
-          }
-          h1 {
-            font-size: 32px !important;
-          }
-          h2 {
-            font-size: 22px !important;
-          }
-          .stats-container {
-            gap: 15px !important;
-          }
-        }
-        @media (min-width: 769px) {
-          nav > button {
-            display: none !important;
-          }
-          .mobile-menu {
-            display: none !important;
-          }
-        }
-      `}</style>
         </div>
-    );
+    )
 }
