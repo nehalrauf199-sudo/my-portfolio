@@ -12,7 +12,6 @@ export default function Certificates() {
             image: '/appreciation.png',
             date: '21st April 2026',
             issuer: 'University of Education, Lahore - Attock Campus',
-            emoji: '🏆',
         },
         {
             id: 2,
@@ -21,7 +20,6 @@ export default function Certificates() {
             image: '/racsit.png',
             date: '2024',
             issuer: 'University of Education, Lahore',
-            emoji: '🎓',
         },
     ];
 
@@ -42,10 +40,7 @@ export default function Certificates() {
 
             <style jsx global>{`
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-          background: #f8fafc;
-          font-family: Arial, sans-serif;
-        }
+        body { background: #f8fafc; }
         .modal-overlay {
           position: fixed;
           top: 0;
@@ -103,13 +98,8 @@ export default function Certificates() {
           to { transform: translateY(0); opacity: 1; }
         }
         @media (max-width: 768px) {
-          .cert-grid {
-            grid-template-columns: 1fr !important;
-          }
-          .modal-content {
-            padding: 20px !important;
-            margin: 10px !important;
-          }
+          .cert-grid { grid-template-columns: 1fr !important; }
+          .modal-content { padding: 20px !important; margin: 10px !important; }
         }
       `}</style>
 
@@ -138,29 +128,10 @@ export default function Certificates() {
             </nav>
 
             {/* Main Content */}
-            <div style={{
-                padding: '100px 20px 60px',
-                maxWidth: '1200px',
-                margin: '0 auto',
-            }}>
-                <h1 style={{
-                    fontSize: '36px',
-                    textAlign: 'center',
-                    color: '#1e293b',
-                    marginBottom: '10px',
-                }}>
-                    My Certificates
-                </h1>
-                <p style={{
-                    textAlign: 'center',
-                    color: '#64748b',
-                    marginBottom: '50px',
-                    fontSize: '16px',
-                }}>
-                    Click on any certificate to view it in detail
-                </p>
+            <div style={{ padding: '100px 20px 60px', maxWidth: '1200px', margin: '0 auto' }}>
+                <h1 style={{ fontSize: '36px', textAlign: 'center', color: '#1e293b' }}>My Certificates</h1>
+                <p style={{ textAlign: 'center', color: '#64748b', marginBottom: '50px' }}>Click on any certificate to view it in detail</p>
 
-                {/* Certificate Grid */}
                 <div className="cert-grid" style={{
                     display: 'grid',
                     gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
@@ -188,16 +159,42 @@ export default function Certificates() {
                                 e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.08)';
                             }}
                         >
+                            {/* Certificate Image Preview */}
                             <div style={{
-                                height: '180px',
+                                height: '200px',
+                                backgroundColor: '#e2e8f0',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                fontSize: '60px',
-                                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                                color: 'white',
+                                overflow: 'hidden',
                             }}>
-                                {cert.emoji}
+                                <img
+                                    src={cert.image}
+                                    alt={cert.title}
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        objectFit: 'contain',
+                                        padding: '10px',
+                                    }}
+                                    onError={(e) => {
+                                        e.target.style.display = 'none';
+                                        e.target.parentElement.innerHTML = `
+                      <div style="
+                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                        width: 100%;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: white;
+                        font-size: 40px;
+                      ">
+                        📄 Certificate
+                      </div>
+                    `;
+                                    }}
+                                />
                             </div>
                             <div style={{ padding: '20px' }}>
                                 <h3 style={{
@@ -221,15 +218,18 @@ export default function Certificates() {
                                 }}>
                                     {cert.date}
                                 </p>
-                                <span style={{
+                                <div style={{
                                     display: 'inline-block',
                                     marginTop: '12px',
                                     color: '#667eea',
                                     fontSize: '14px',
                                     fontWeight: '600',
+                                    backgroundColor: '#e0e7ff',
+                                    padding: '6px 16px',
+                                    borderRadius: '20px',
                                 }}>
                                     Click to view →
-                                </span>
+                                </div>
                             </div>
                         </div>
                     ))}
@@ -241,7 +241,6 @@ export default function Certificates() {
                 <div className="modal-overlay" onClick={closeModal}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                         <button className="close-btn" onClick={closeModal}>✕</button>
-
                         <h2 style={{
                             fontSize: '22px',
                             color: '#1e293b',
@@ -252,7 +251,7 @@ export default function Certificates() {
                             {selectedCert.title}
                         </h2>
 
-                        {/* Certificate Image */}
+                        {/* Certificate Image in Modal */}
                         <img
                             src={selectedCert.image}
                             alt={selectedCert.title}
@@ -276,8 +275,9 @@ export default function Certificates() {
                     color: white;
                     margin-bottom: 20px;
                   ">
-                    <p style="font-size: 60px; margin: 0;">${selectedCert.emoji}</p>
+                    <p style="font-size: 60px; margin: 0;">📄</p>
                     <p style="margin-top: 10px;">Certificate Image</p>
+                    <p style="font-size: 14px; margin-top: 5px;">Make sure ${selectedCert.image} exists in /public folder</p>
                   </div>
                 `;
                             }}
