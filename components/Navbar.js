@@ -58,7 +58,6 @@ export default function Navbar() {
                     border: 'none',
                     fontSize: '28px',
                     cursor: 'pointer',
-                    '@media (max-width: 768px)': { display: 'block' }
                 }}>
                     ☰
                 </button>
