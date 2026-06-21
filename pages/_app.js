@@ -1,4 +1,3 @@
-import '@/styles/globals.css'; // if you have one
 import { Analytics } from '@vercel/analytics/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/router';
