@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 
 export default function Contact() {
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [scrolled, setScrolled] = useState(false)
     const [formStatus, setFormStatus] = useState('')
 
@@ -35,8 +36,22 @@ export default function Contact() {
         <div style={{ fontFamily: 'Arial, sans-serif' }}>
             <Head>
                 <title>Contact | Nehal Rauf</title>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
             </Head>
+
+            <style jsx global>{`
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { overflow-x: hidden; }
+        @media (max-width: 768px) {
+          .desktop-menu { display: none !important; }
+          .hamburger-btn { display: block !important; }
+          .contact-card { padding: 25px !important; }
+        }
+        @media (min-width: 769px) {
+          .hamburger-btn { display: none !important; }
+          .mobile-menu { display: none !important; }
+        }
+      `}</style>
 
             {/* Navigation */}
             <nav style={{
@@ -55,6 +70,7 @@ export default function Contact() {
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
+                    flexWrap: 'wrap',
                 }}>
                     <h1 style={{
                         fontSize: '24px',
@@ -64,13 +80,50 @@ export default function Contact() {
                     }}>
                         Nehal Rauf
                     </h1>
-                    <div style={{ display: 'flex', gap: '25px' }}>
-                        <Link href="/" style={{ color: scrolled ? '#333' : 'white', textDecoration: 'none', fontSize: '16px' }}>Home</Link>
-                        <Link href="/projects" style={{ color: scrolled ? '#333' : 'white', textDecoration: 'none', fontSize: '16px' }}>Projects</Link>
-                        <Link href="/certificates" style={{ color: scrolled ? '#333' : 'white', textDecoration: 'none', fontSize: '16px' }}>Certificates</Link>
-                        <Link href="/contact" style={{ color: scrolled ? '#333' : 'white', textDecoration: 'none', fontSize: '16px', fontWeight: 'bold', borderBottom: '2px solid #ffd700' }}>Contact</Link>
+
+                    <div className="desktop-menu" style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+                        <Link href="/" style={{ fontSize: '16px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Home</Link>
+                        <Link href="/projects" style={{ fontSize: '16px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Projects</Link>
+                        <Link href="/certificates" style={{ fontSize: '16px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Certificates</Link>
+                        <Link href="/contact" style={{ fontSize: '16px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white', borderBottom: '2px solid #ffd700' }}>Contact</Link>
                     </div>
+
+                    <button
+                        className="hamburger-btn"
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        style={{
+                            display: 'none',
+                            background: 'none',
+                            border: 'none',
+                            fontSize: '30px',
+                            cursor: 'pointer',
+                            color: scrolled ? '#333' : 'white',
+                        }}
+                    >
+                        {isMenuOpen ? '✕' : '☰'}
+                    </button>
                 </div>
+
+                {isMenuOpen && (
+                    <div className="mobile-menu" style={{
+                        backgroundColor: 'white',
+                        padding: '20px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '10px',
+                        borderTop: '1px solid #eee',
+                        position: 'absolute',
+                        top: '65px',
+                        left: 0,
+                        right: 0,
+                        boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+                    }}>
+                        <Link href="/" style={{ fontSize: '18px', padding: '12px', textDecoration: 'none', color: '#333', borderBottom: '1px solid #eee' }} onClick={() => setIsMenuOpen(false)}>🏠 Home</Link>
+                        <Link href="/projects" style={{ fontSize: '18px', padding: '12px', textDecoration: 'none', color: '#333', borderBottom: '1px solid #eee' }} onClick={() => setIsMenuOpen(false)}>📁 Projects</Link>
+                        <Link href="/certificates" style={{ fontSize: '18px', padding: '12px', textDecoration: 'none', color: '#333', borderBottom: '1px solid #eee' }} onClick={() => setIsMenuOpen(false)}>📜 Certificates</Link>
+                        <Link href="/contact" style={{ fontSize: '18px', padding: '12px', textDecoration: 'none', color: '#333' }} onClick={() => setIsMenuOpen(false)}>📞 Contact</Link>
+                    </div>
+                )}
             </nav>
 
             {/* Contact Section */}
@@ -82,7 +135,7 @@ export default function Contact() {
                 justifyContent: 'center',
                 padding: '100px 20px 60px',
             }}>
-                <div style={{
+                <div className="contact-card" style={{
                     backgroundColor: 'white',
                     borderRadius: '20px',
                     padding: '40px',
@@ -106,7 +159,6 @@ export default function Contact() {
                         I'll respond within 2 hours!
                     </p>
 
-                    {/* Email Form */}
                     <form onSubmit={handleSubmit}>
                         <div style={{ marginBottom: '15px' }}>
                             <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Your Name *</label>
@@ -193,7 +245,6 @@ export default function Contact() {
                         </button>
                     </form>
 
-                    {/* Direct Contact Info */}
                     <div style={{
                         marginTop: '25px',
                         display: 'flex',

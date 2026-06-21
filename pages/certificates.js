@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 
 export default function Certificates() {
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [scrolled, setScrolled] = useState(false)
     const [selectedCert, setSelectedCert] = useState(null)
 
@@ -38,10 +39,12 @@ export default function Certificates() {
         <div style={{ fontFamily: 'Arial, sans-serif' }}>
             <Head>
                 <title>Certificates | Nehal Rauf</title>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
             </Head>
 
             <style jsx global>{`
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { overflow-x: hidden; }
         .modal-overlay {
           position: fixed;
           top: 0;
@@ -99,8 +102,14 @@ export default function Certificates() {
           to { transform: translateY(0); opacity: 1; }
         }
         @media (max-width: 768px) {
+          .desktop-menu { display: none !important; }
+          .hamburger-btn { display: block !important; }
           .cert-grid { grid-template-columns: 1fr !important; }
           .modal-content { padding: 20px !important; margin: 10px !important; }
+        }
+        @media (min-width: 769px) {
+          .hamburger-btn { display: none !important; }
+          .mobile-menu { display: none !important; }
         }
       `}</style>
 
@@ -121,6 +130,7 @@ export default function Certificates() {
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
+                    flexWrap: 'wrap',
                 }}>
                     <h1 style={{
                         fontSize: '24px',
@@ -130,16 +140,53 @@ export default function Certificates() {
                     }}>
                         Nehal Rauf
                     </h1>
-                    <div style={{ display: 'flex', gap: '25px' }}>
-                        <Link href="/" style={{ color: scrolled ? '#333' : 'white', textDecoration: 'none', fontSize: '16px' }}>Home</Link>
-                        <Link href="/projects" style={{ color: scrolled ? '#333' : 'white', textDecoration: 'none', fontSize: '16px' }}>Projects</Link>
-                        <Link href="/certificates" style={{ color: scrolled ? '#333' : 'white', textDecoration: 'none', fontSize: '16px', fontWeight: 'bold', borderBottom: '2px solid #ffd700' }}>Certificates</Link>
-                        <Link href="/contact" style={{ color: scrolled ? '#333' : 'white', textDecoration: 'none', fontSize: '16px' }}>Contact</Link>
+
+                    <div className="desktop-menu" style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+                        <Link href="/" style={{ fontSize: '16px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Home</Link>
+                        <Link href="/projects" style={{ fontSize: '16px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Projects</Link>
+                        <Link href="/certificates" style={{ fontSize: '16px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white', borderBottom: '2px solid #ffd700' }}>Certificates</Link>
+                        <Link href="/contact" style={{ fontSize: '16px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Contact</Link>
                     </div>
+
+                    <button
+                        className="hamburger-btn"
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        style={{
+                            display: 'none',
+                            background: 'none',
+                            border: 'none',
+                            fontSize: '30px',
+                            cursor: 'pointer',
+                            color: scrolled ? '#333' : 'white',
+                        }}
+                    >
+                        {isMenuOpen ? '✕' : '☰'}
+                    </button>
                 </div>
+
+                {isMenuOpen && (
+                    <div className="mobile-menu" style={{
+                        backgroundColor: 'white',
+                        padding: '20px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '10px',
+                        borderTop: '1px solid #eee',
+                        position: 'absolute',
+                        top: '65px',
+                        left: 0,
+                        right: 0,
+                        boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+                    }}>
+                        <Link href="/" style={{ fontSize: '18px', padding: '12px', textDecoration: 'none', color: '#333', borderBottom: '1px solid #eee' }} onClick={() => setIsMenuOpen(false)}>🏠 Home</Link>
+                        <Link href="/projects" style={{ fontSize: '18px', padding: '12px', textDecoration: 'none', color: '#333', borderBottom: '1px solid #eee' }} onClick={() => setIsMenuOpen(false)}>📁 Projects</Link>
+                        <Link href="/certificates" style={{ fontSize: '18px', padding: '12px', textDecoration: 'none', color: '#333', borderBottom: '1px solid #eee' }} onClick={() => setIsMenuOpen(false)}>📜 Certificates</Link>
+                        <Link href="/contact" style={{ fontSize: '18px', padding: '12px', textDecoration: 'none', color: '#333' }} onClick={() => setIsMenuOpen(false)}>📞 Contact</Link>
+                    </div>
+                )}
             </nav>
 
-            {/* Main Content */}
+            {/* Certificates Content */}
             <div style={{
                 padding: '100px 20px 60px',
                 maxWidth: '1200px',
@@ -178,7 +225,10 @@ export default function Certificates() {
                                 boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
                                 cursor: 'pointer',
                                 transition: 'transform 0.3s, box-shadow 0.3s',
-                                border: '1px solid #e2e8f0',
+                                border: '2px solid transparent',
+                                backgroundImage: 'linear-gradient(white, white), linear-gradient(135deg, #ffd700, #667eea, #764ba2)',
+                                backgroundOrigin: 'border-box',
+                                backgroundClip: 'padding-box, border-box',
                             }}
                             onMouseEnter={(e) => {
                                 e.currentTarget.style.transform = 'translateY(-8px)';

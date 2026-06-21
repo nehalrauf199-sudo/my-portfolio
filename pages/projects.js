@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 
 export default function Projects() {
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [scrolled, setScrolled] = useState(false)
 
     useEffect(() => {
@@ -15,8 +16,24 @@ export default function Projects() {
         <div style={{ fontFamily: 'Arial, sans-serif' }}>
             <Head>
                 <title>Projects | Nehal Rauf</title>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
             </Head>
+
+            <style jsx global>{`
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { overflow-x: hidden; }
+        @media (max-width: 768px) {
+          .desktop-menu { display: none !important; }
+          .hamburger-btn { display: block !important; }
+          .projects-grid { grid-template-columns: 1fr !important; text-align: center !important; }
+          .projects-grid > div { flex-direction: column !important; }
+          .project-image { min-height: 150px !important; }
+        }
+        @media (min-width: 769px) {
+          .hamburger-btn { display: none !important; }
+          .mobile-menu { display: none !important; }
+        }
+      `}</style>
 
             {/* Navigation */}
             <nav style={{
@@ -35,6 +52,7 @@ export default function Projects() {
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
+                    flexWrap: 'wrap',
                 }}>
                     <h1 style={{
                         fontSize: '24px',
@@ -44,13 +62,50 @@ export default function Projects() {
                     }}>
                         Nehal Rauf
                     </h1>
-                    <div style={{ display: 'flex', gap: '25px' }}>
-                        <Link href="/" style={{ color: scrolled ? '#333' : 'white', textDecoration: 'none', fontSize: '16px' }}>Home</Link>
-                        <Link href="/projects" style={{ color: scrolled ? '#333' : 'white', textDecoration: 'none', fontSize: '16px', fontWeight: 'bold', borderBottom: '2px solid #ffd700' }}>Projects</Link>
-                        <Link href="/certificates" style={{ color: scrolled ? '#333' : 'white', textDecoration: 'none', fontSize: '16px' }}>Certificates</Link>
-                        <Link href="/contact" style={{ color: scrolled ? '#333' : 'white', textDecoration: 'none', fontSize: '16px' }}>Contact</Link>
+
+                    <div className="desktop-menu" style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+                        <Link href="/" style={{ fontSize: '16px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Home</Link>
+                        <Link href="/projects" style={{ fontSize: '16px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white', borderBottom: '2px solid #ffd700' }}>Projects</Link>
+                        <Link href="/certificates" style={{ fontSize: '16px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Certificates</Link>
+                        <Link href="/contact" style={{ fontSize: '16px', fontWeight: '500', textDecoration: 'none', color: scrolled ? '#333' : 'white' }}>Contact</Link>
                     </div>
+
+                    <button
+                        className="hamburger-btn"
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        style={{
+                            display: 'none',
+                            background: 'none',
+                            border: 'none',
+                            fontSize: '30px',
+                            cursor: 'pointer',
+                            color: scrolled ? '#333' : 'white',
+                        }}
+                    >
+                        {isMenuOpen ? '✕' : '☰'}
+                    </button>
                 </div>
+
+                {isMenuOpen && (
+                    <div className="mobile-menu" style={{
+                        backgroundColor: 'white',
+                        padding: '20px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '10px',
+                        borderTop: '1px solid #eee',
+                        position: 'absolute',
+                        top: '65px',
+                        left: 0,
+                        right: 0,
+                        boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+                    }}>
+                        <Link href="/" style={{ fontSize: '18px', padding: '12px', textDecoration: 'none', color: '#333', borderBottom: '1px solid #eee' }} onClick={() => setIsMenuOpen(false)}>🏠 Home</Link>
+                        <Link href="/projects" style={{ fontSize: '18px', padding: '12px', textDecoration: 'none', color: '#333', borderBottom: '1px solid #eee' }} onClick={() => setIsMenuOpen(false)}>📁 Projects</Link>
+                        <Link href="/certificates" style={{ fontSize: '18px', padding: '12px', textDecoration: 'none', color: '#333', borderBottom: '1px solid #eee' }} onClick={() => setIsMenuOpen(false)}>📜 Certificates</Link>
+                        <Link href="/contact" style={{ fontSize: '18px', padding: '12px', textDecoration: 'none', color: '#333' }} onClick={() => setIsMenuOpen(false)}>📞 Contact</Link>
+                    </div>
+                )}
             </nav>
 
             {/* Projects Content */}
@@ -63,13 +118,23 @@ export default function Projects() {
                     <h1 style={{ fontSize: '36px', textAlign: 'center', color: '#1e293b' }}>My Projects</h1>
                     <p style={{ textAlign: 'center', color: '#64748b', marginBottom: '40px' }}>Here's what I've built</p>
 
-                    <div style={{
+                    {/* Project Card with Gradient Border */}
+                    <div className="projects-grid" style={{
                         backgroundColor: 'white',
                         borderRadius: '16px',
                         padding: '30px',
                         boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
+                        border: '2px solid transparent',
+                        backgroundImage: 'linear-gradient(white, white), linear-gradient(135deg, #667eea, #764ba2)',
+                        backgroundOrigin: 'border-box',
+                        backgroundClip: 'padding-box, border-box',
                     }}>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', alignItems: 'center' }}>
+                        <div style={{
+                            display: 'grid',
+                            gridTemplateColumns: '1fr 1fr',
+                            gap: '30px',
+                            alignItems: 'center',
+                        }}>
                             <div>
                                 <h2 style={{ fontSize: '24px', color: '#1e293b' }}>ISTS Educational Website</h2>
                                 <p style={{ color: '#64748b', marginBottom: '15px' }}>
@@ -86,8 +151,8 @@ export default function Projects() {
                                 </div>
                             </div>
 
-                            {/* PROJECT IMAGE - YOUR project.png */}
-                            <div style={{
+                            {/* Project Image */}
+                            <div className="project-image" style={{
                                 backgroundColor: '#f1f5f9',
                                 borderRadius: '12px',
                                 padding: '20px',
@@ -138,9 +203,15 @@ export default function Projects() {
                 color: '#94a3b8',
                 textAlign: 'center',
                 padding: '20px',
+                fontSize: '14px',
             }}>
                 <p>© 2026 Nehal Rauf. All rights reserved.</p>
+                <div style={{ marginTop: '8px' }}>
+                    <a href="https://github.com/nehalrauf199-sudO" target="_blank" style={{ color: '#94a3b8', margin: '0 8px', textDecoration: 'none' }}>GitHub</a>
+                    <a href="https://www.linkedin.com/in/nehall-rauf" target="_blank" style={{ color: '#94a3b8', margin: '0 8px', textDecoration: 'none' }}>LinkedIn</a>
+                    <Link href="/" style={{ color: '#94a3b8', margin: '0 8px', textDecoration: 'none' }}>Home</Link>
+                </div>
             </footer>
         </div>
-    );
+    )
 }
